@@ -1,0 +1,28 @@
+.footer {
+  background-color: rgb(100, 55, 158);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer .contact-info p {
+  margin: 5px 0;
+  font-size: 1.2rem;
+}
+
+.footer .footer-links p {
+  margin: 5px 0;
+  font-size: 1rem;
+}
+
+.footer .footer-links p a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer .footer-links p a:hover {
+  text-decoration: underline;
+}
