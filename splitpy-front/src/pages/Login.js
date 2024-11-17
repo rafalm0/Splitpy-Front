@@ -1,12 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './Login.css'; // Create CSS file if needed for styling
+import './Login.css';
 
 function Login() {
   const [isLogin, setIsLogin] = useState(true);  // True = Login, False = Sign Up
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Track login state
 
   const toggleForm = () => {
     setIsLogin(!isLogin);  // Switch between login and sign up
+  };
+
+  useEffect(() => {
+    // Check if token exists in localStorage
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsAuthenticated(false);
+    window.location.href = '/login';  // Redirect to login after logout
   };
 
   return (
@@ -21,6 +36,13 @@ function Login() {
         <button className="submit-button" onClick={toggleForm}>
           {isLogin ? 'Create an Account' : 'Already have an account? Login'}
         </button>
+
+        {/* Show logout button if authenticated */}
+        {isAuthenticated && (
+          <button className="logout-button" onClick={handleLogout}>
+            Logout
+          </button>
+        )}
       </div>
     </div>
   );
@@ -32,19 +54,24 @@ function LoginForm() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:5000/login', {
-        username,
-        password,
-      });
-      const { access_token } = response.data;
-      localStorage.setItem('token', access_token);
-      window.location.href = '/';  // Redirect to home after successful login
-    } catch (error) {
-      setErrorMessage('Invalid username or password');
-    }
-  };
+      e.preventDefault();
+      console.log('Username:', username);  // Check username
+      console.log('Password:', password);  // Check password
+
+      try {
+        const response = await axios.post('https://splitpy.onrender.com/login', {
+          username,
+          password,
+        });
+        console.log('Response:', response);  // Check the response
+        const { access_token } = response.data;
+        localStorage.setItem('token', access_token);
+        window.location.href = '/';  // Redirect to home after successful login
+      } catch (error) {
+        console.error('Error:', error);
+        setErrorMessage('Invalid username or password');
+      }
+    };
 
   return (
     <div className="form">
@@ -90,7 +117,7 @@ function SignUpForm() {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/register', {
+      await axios.post('https://splitpy.onrender.com/register', {
         username,
         email,
         password,
