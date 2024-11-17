@@ -40,10 +40,7 @@ function Home() {
         </Link>
       </section>
 
-      {/* Add navigation links */}
-      <nav className="home-nav">
-        <Link to="/login">Login</Link> | <Link to="/about">About Split Py</Link>
-      </nav>
+
     </div>
   );
 }

@@ -13,6 +13,9 @@ function Header() {
       <nav>
         <ul className="nav-links">
           <li>
+            <Link to="/login" className="nav-link">
+              Login
+            </Link>
             <Link to="/about" className="nav-link">
               About
             </Link>
