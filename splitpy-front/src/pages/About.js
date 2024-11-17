@@ -1,10 +1,9 @@
 import React from "react";
 import './About.css';
 
-function AboutPage() {
+function About() {
   return (
     <div className="about-container">
-      <h1>Welcome to Split Py</h1>
       <p>Split Py is a web application designed to help users easily split and manage transaction costs with friends, family, or groups.</p>
       <p>With Split Py, you can:</p>
       <ul>
@@ -17,4 +16,4 @@ function AboutPage() {
   );
 }
 
-export default AboutPage;
+export default About;

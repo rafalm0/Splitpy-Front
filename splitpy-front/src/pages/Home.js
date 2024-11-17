@@ -1,7 +1,8 @@
 import React from 'react';
-import './Home.css';
+import { Link } from 'react-router-dom'; // Import Link for navigation
+import './Home.css'; // Assuming Home.css is in the same folder
 
-function HomePage() {
+function Home() {
   return (
     <div className="home-page">
       <section className="intro">
@@ -34,10 +35,17 @@ function HomePage() {
       <section className="cta">
         <h2>Ready to Start Splitting?</h2>
         <p>Join thousands of others who are using Split Py to simplify their expenses.</p>
-        <button>Get Started</button>
+        <Link to="/login">
+          <button>Get Started</button>
+        </Link>
       </section>
+
+      {/* Add navigation links */}
+      <nav className="home-nav">
+        <Link to="/login">Login</Link> | <Link to="/about">About Split Py</Link>
+      </nav>
     </div>
   );
 }
 
-export default HomePage;
+export default Home;

@@ -4,6 +4,8 @@ import Header from './components/Header'; // Assuming your Header component is i
 import Footer from './components/Footer';
 import About from './pages/About'; // Import the About page
 import Home from './pages/Home'; // Your existing Home page component
+import Login from './pages/Login';  // Your new LoginPage component
+
 
 function App() {
   return (
@@ -14,6 +16,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </div>
         <Footer />
