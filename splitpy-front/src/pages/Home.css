@@ -186,3 +186,36 @@
 .cta button:hover {
   background-color: #45a049;
 }
+
+.modal {
+  position: fixed;
+  top: 150px; /* Adjust this value to align properly under the "Your Groups" heading */
+  left: 20px; /* Adjust based on sidebar width */
+  width: 225px; /* Adjust width to fit the sidebar */
+  background-color: rgba(0, 0, 0 1);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Matches the modal width */
+}
+
+.modal-content h3 {
+  margin-top: 0;
+}
+
+.modal-content input {
+  width: 90%;
+  margin-bottom: 10px;
+}
+
+.modal-content button {
+  margin-right: 5px;
+}

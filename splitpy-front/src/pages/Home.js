@@ -6,6 +6,8 @@ import './Home.css';
 function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [groups, setGroups] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [newGroupName, setNewGroupName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
@@ -30,6 +32,29 @@ function Home() {
     } catch (error) {
       setErrorMessage('Failed to load groups');
       console.error('Error fetching groups:', error);
+    }
+  };
+
+  const handleCreateGroup = async () => {
+    const token = localStorage.getItem('token');
+    if (!token || !newGroupName) return;
+
+    try {
+      await axios.post(
+        'https://splitpy.onrender.com/group',
+        { name: newGroupName },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setNewGroupName('');
+      setShowModal(false);
+      fetchUserGroups(token); // Refresh the group list
+    } catch (error) {
+      setErrorMessage('Failed to create group');
+      console.error('Error creating group:', error);
     }
   };
 
@@ -60,6 +85,9 @@ function Home() {
                 )}
               </ul>
             )}
+            <button onClick={() => setShowModal(true)} className="create-group-button">
+              Create New Group
+            </button>
           </div>
           <div className="main-content">
             <h1>Welcome to Split Py!</h1>
@@ -85,6 +113,22 @@ function Home() {
               <button>Get Started</button>
             </Link>
           </section>
+        </div>
+      )}
+
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Create New Group</h3>
+            <input
+              type="text"
+              placeholder="Group Name"
+              value={newGroupName}
+              onChange={(e) => setNewGroupName(e.target.value)}
+            />
+            <button onClick={handleCreateGroup}>Create</button>
+            <button onClick={() => setShowModal(false)}>Cancel</button>
+          </div>
         </div>
       )}
     </div>
