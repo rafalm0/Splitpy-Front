@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import NewGroupModal from "../components/NewGroupModal"; // Import the new modal
+import GroupHeader from "../components/GroupHeader"; // Import GroupHeader
 import "./Home.css";
 
 function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [groups, setGroups] = useState([]);
+  const [selectedGroup, setSelectedGroup] = useState(null); // Track the selected group
   const [showModal, setShowModal] = useState(false);
   const [newGroupName, setNewGroupName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -23,16 +25,13 @@ function Home() {
 
   const fetchUserGroups = async (token) => {
     try {
-      const response = await axios.get(
-        "https://splitpy.onrender.com/group",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get("https://splitpy.onrender.com/group", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
       setGroups(response.data);
     } catch (error) {
       setErrorMessage("Failed to load groups");
@@ -63,6 +62,21 @@ function Home() {
     }
   };
 
+  // Rename callback to update UI
+  const handleRename = (groupId, newName) => {
+    setGroups((prevGroups) =>
+      prevGroups.map((group) =>
+        group.id === groupId ? { ...group, name: newName } : group
+      )
+    );
+  };
+
+  // Delete callback to update UI
+  const handleDelete = (groupId) => {
+    setGroups((prevGroups) => prevGroups.filter((group) => group.id !== groupId));
+    setSelectedGroup(null); // Deselect the group after deletion
+  };
+
   return (
     <div className="home-page">
       {isAuthenticated ? (
@@ -74,8 +88,12 @@ function Home() {
             ) : (
               <ul className="groups-list">
                 {groups.length > 0 ? (
-                  groups.map((group, index) => (
-                    <li key={index} className="group-item">
+                  groups.map((group) => (
+                    <li
+                      key={group.id}
+                      className="group-item"
+                      onClick={() => setSelectedGroup(group)} // Set the selected group
+                    >
                       {group.name}
                     </li>
                   ))
@@ -92,8 +110,15 @@ function Home() {
             </button>
           </div>
           <div className="main-content">
-            <h1>Welcome to Split Py!</h1>
-            <p>Manage your groups and expenses easily.</p>
+            {selectedGroup ? (
+              <GroupHeader
+                group={selectedGroup}
+                onRename={handleRename}
+                onDelete={handleDelete}
+              />
+            ) : (
+              <p>Select a group from the sidebar to view details.</p>
+            )}
           </div>
         </div>
       ) : (
