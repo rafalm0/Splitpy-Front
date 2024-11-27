@@ -1,0 +1,40 @@
+.group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem; /* Adjust padding if needed */
+  border-bottom: 1px solid #ddd;
+}
+
+.group-header h3 {
+  font-size: 1.5em; /* This increases the size of the group name */
+}
+
+.group-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.rename-button,
+.delete-button {
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+}
+
+.rename-button {
+  background-color: #4CAF50; /* Green */
+  color: white;
+}
+
+.delete-button {
+  background-color: #f44336; /* Red */
+  color: white;
+}
+
+.rename-button:hover,
+.delete-button:hover {
+  opacity: 0.8; /* Slight opacity change on hover */
+}
