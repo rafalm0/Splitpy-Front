@@ -1,4 +1,3 @@
-// GroupHeader.js
 import React, { useState } from "react";
 import axios from "axios";
 
@@ -9,6 +8,7 @@ const GroupHeader = ({ group, onRename, onDelete }) => {
   const handleRename = async () => {
     const token = localStorage.getItem("token");
     try {
+      // Send PUT request to rename the group
       await axios.put(
         `https://splitpy.onrender.com/group/${group.id}`,
         { name: newName },
@@ -16,41 +16,45 @@ const GroupHeader = ({ group, onRename, onDelete }) => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      onRename(group.id, newName); // Callback to update UI
-      setIsEditing(false);
+      // Callback to update the UI with the new name
+      onRename(group.id, newName);
+      setIsEditing(false); // Stop editing after renaming
     } catch (error) {
       console.error("Error renaming group:", error);
+      // Handle any error here, e.g., show an error message
     }
   };
 
   const handleDelete = async () => {
     const token = localStorage.getItem("token");
     try {
+      // Send DELETE request to remove the group
       await axios.delete(`https://splitpy.onrender.com/group/${group.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      onDelete(group.id); // Callback to update UI
+      // Callback to remove the group from the UI
+      onDelete(group.id);
     } catch (error) {
       console.error("Error deleting group:", error);
+      // Handle any error here, e.g., show an error message
     }
   };
 
   return (
-    <div className="group-header flex items-center justify-between p-4 border-b">
-      {/* Group Name (with increased size) */}
-      {!isEditing ? (
-        <h3 className="text-2xl font-semibold">{group.name}</h3> // Make the name bigger
-      ) : (
-        <input
-          type="text"
-          value={newName}
-          onChange={(e) => setNewName(e.target.value)}
-          className="border rounded p-2 text-gray-700"
-        />
-      )}
-
-      {/* Buttons */}
-      <div className="flex space-x-4">
+    <div className="group-header flex items-center justify-between p-2 border-b">
+      <div>
+        {!isEditing ? (
+          <h3 className="text-2xl font-semibold">{group.name}</h3>
+        ) : (
+          <input
+            type="text"
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+            className="border rounded p-1 text-gray-700"
+          />
+        )}
+      </div>
+      <div className="flex space-x-2">
         {isEditing ? (
           <button
             onClick={handleRename}
