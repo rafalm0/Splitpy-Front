@@ -1,14 +1,26 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const GroupHeader = ({ group, onRename, onDelete }) => {
+const GroupHeader = ({ group }) => {
+  const [isDeleted, setIsDeleted] = useState(false); // Track if the group is deleted
   const [isEditing, setIsEditing] = useState(false);
   const [newName, setNewName] = useState(group.name);
+
+  const handleDelete = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      await axios.delete(`https://splitpy.onrender.com/group/${group.id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setIsDeleted(true); // Mark the group as deleted
+    } catch (error) {
+      console.error("Error deleting group:", error);
+    }
+  };
 
   const handleRename = async () => {
     const token = localStorage.getItem("token");
     try {
-      // Send PUT request to rename the group
       await axios.put(
         `https://splitpy.onrender.com/group/${group.id}`,
         { name: newName },
@@ -16,29 +28,14 @@ const GroupHeader = ({ group, onRename, onDelete }) => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      // Callback to update the UI with the new name
-      onRename(group.id, newName);
       setIsEditing(false); // Stop editing after renaming
     } catch (error) {
       console.error("Error renaming group:", error);
-      // Handle any error here, e.g., show an error message
     }
   };
 
-  const handleDelete = async () => {
-    const token = localStorage.getItem("token");
-    try {
-      // Send DELETE request to remove the group
-      await axios.delete(`https://splitpy.onrender.com/group/${group.id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      // Callback to remove the group from the UI
-      onDelete(group.id);
-    } catch (error) {
-      console.error("Error deleting group:", error);
-      // Handle any error here, e.g., show an error message
-    }
-  };
+  // If deleted, do not render anything
+  if (isDeleted) return null;
 
   return (
     <div className="group-header flex items-center justify-between p-2 border-b">
