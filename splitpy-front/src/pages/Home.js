@@ -23,10 +23,12 @@ function Home() {
 
   const fetchUserGroups = async (token) => {
     try {
-      const response = await axios.get('https://splitpy.onrender.com/groups', {
+      const response = await axios.get('https://splitpy.onrender.com/group', {
         headers: {
           Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
         },
+          withCredentials: true, // Needed for cookies or credentials
       });
       setGroups(response.data);
     } catch (error) {
