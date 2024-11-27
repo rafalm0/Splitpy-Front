@@ -94,9 +94,7 @@ function Home() {
           <div className="main-content">
             <h1>Welcome to Split Py!</h1>
             <p>Manage your groups and expenses easily.</p>
-            <button className="logout-button" onClick={handleLogout}>
-              Logout
-            </button>
+
           </div>
         </div>
       ) : (

@@ -28,27 +28,52 @@ function Header() {
       </div>
       <nav>
         <ul className="nav-links">
-          <li>
-            {!isAuthenticated ? (
-              <Link to="/login" className="nav-link">
-                Login
-              </Link>
-            ) : (
-              <button className="nav-link" onClick={handleLogout}>
-                Logout
-              </button>
-            )}
-            {/* Conditionally render the About link based on authentication */}
-            {!isAuthenticated && (
-              <Link to="/about" className="nav-link">
-                About
-              </Link>
-            )}
-          </li>
+          {isAuthenticated ? (
+            <>
+              <li>
+                <button className="nav-link logout-button" onClick={handleLogout}>
+                  Logout
+                </button>
+              </li>
+              <li>
+                <button
+                  className="nav-link about-button"
+                  onClick={() => window.location.href = "/about"}>
+                  About
+                </button>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <Link to="/login" className="nav-link">
+                  Login
+                </Link>
+              </li>
+              <li>
+                <button
+                  className="nav-link about-button"
+                  onClick={() => window.location.href = "/about"}>
+                  About
+                </button>
+              </li>
+            </>
+          )}
         </ul>
       </nav>
     </header>
   );
 }
 
+
+
 export default Header;
+
+
+
+//
+//<script type="text/javascript">
+//    document.getElementById("about-button").onclick = function () {
+//        window.location.href = "http://localhost:3000/about"
+//        };
+//</script>

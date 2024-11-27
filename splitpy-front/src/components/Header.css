@@ -6,6 +6,7 @@
   background-color: rgb(150, 100, 200);
   color: white;
   font-family: Arial, sans-serif;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .logo-link {
@@ -17,7 +18,9 @@
 
 .nav-links {
   display: flex;
+  align-items: center;
   list-style: none;
+  margin: 0;
   padding: 0;
 }
 
@@ -26,22 +29,36 @@
   text-decoration: none;
   color: white;
   font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 .nav-link:hover {
-  text-decoration: underline;
+  color: #d4a9ff;
 }
 
-.button {
-  background-color: #4CAF50; /* Green background */
-  color: white; /* White text */
-  border: none; /* Remove border */
-  padding: 10px 20px; /* Padding around the text */
-  text-align: center; /* Center align text */
-  text-decoration: none; /* Remove underline */
-  display: inline-block; /* Make it inline */
-  font-size: 16px; /* Font size */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s ease; /* Smooth background color transition */
+.logout-button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.logout-button:hover {
+  color: #e57373;
+}
+
+.about-button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.about-button:hover {
+  color: #e57373;
 }
