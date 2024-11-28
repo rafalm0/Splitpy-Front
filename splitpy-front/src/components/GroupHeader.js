@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import RenameGroupModal from "./RenameGroupModal";
+import "./GroupHeader.css";
 
 const GroupHeader = ({ group }) => {
   const [isDeleted, setIsDeleted] = useState(false); // Track if the group is deleted
@@ -41,16 +42,16 @@ const GroupHeader = ({ group }) => {
   return (
     <div className="group-header flex items-center justify-between p-2 border-b">
       <h3 className="text-2xl font-semibold">{group.name}</h3>
-      <div className="flex space-x-2">
+      <div className="group-header">
         <button
           onClick={() => setIsRenameModalOpen(true)}
-          className="px-4 py-2 text-white bg-blue-500 rounded"
+          className="rename-button"
         >
           Rename
         </button>
         <button
           onClick={handleDelete}
-          className="px-4 py-2 text-white bg-red-500 rounded"
+          className="delete-button"
         >
           Delete
         </button>
