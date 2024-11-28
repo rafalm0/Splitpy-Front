@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AddMemberModal from "./AddMemberModal";
-import './MemberList.css';
+import "./MemberList.css";
 
 const MemberList = ({ groupId }) => {
   const [members, setMembers] = useState([]);
@@ -22,6 +22,18 @@ const MemberList = ({ groupId }) => {
     }
   };
 
+  const handleDeleteMember = async (memberId) => {
+    const token = localStorage.getItem("token");
+    try {
+      await axios.delete(`https://splitpy.onrender.com/member/${memberId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setMembers((prev) => prev.filter((member) => member.id !== memberId));
+    } catch (error) {
+      console.error("Error deleting member:", error);
+    }
+  };
+
   const addMember = async (newMember) => {
     const token = localStorage.getItem("token");
     try {
@@ -32,34 +44,40 @@ const MemberList = ({ groupId }) => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      fetchMembers(); // Refresh the member list
+      fetchMembers(); // Refresh the list
     } catch (error) {
       console.error("Error adding member:", error);
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchMembers();
   }, [groupId]);
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-xl font-semibold">Group Members</h3>
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="px-4 py-2 bg-green-500 text-white rounded"
-        >
-          Add Member
-        </button>
-      </div>
-      <ul className="space-y-2">
+    <div className="member-list">
+      <h3 className="member-header">Group Members</h3>
+      <ul>
         {members.map((member) => (
-          <li key={member.id} className="p-2 border rounded">
-            {member.name} | {member.email}
+          <li key={member.id} className="member-item">
+            <span>
+              <h3 className='member-name'>{member.name}  </h3>
+            </span>
+            <button
+              onClick={() => handleDeleteMember(member.id)}
+              className="delete-button"
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="add-member-button"
+      >
+        Add Member
+      </button>
       <AddMemberModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

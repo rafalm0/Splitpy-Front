@@ -1,0 +1,81 @@
+.main-content {
+  padding-top: 10px; /* Add padding to ensure space for the header */
+  position: relative; /* Set the parent container to relative */
+  padding: 20px;
+  background-color: #f4f4f4; /* Background color for distinction */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+/* MemberList.css */
+.member-list {
+  position: absolute; /* Fixes it inside the parent container */
+  top: 30; /* Align at the top */
+  left: 5; /* Align at the left inside the parent */
+  width: 250px; /* Fixed width for the card-like component */
+  background-color: #ffffff; /* Card-like background */
+  border: 1px solid #ddd; /* Subtle border */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  padding: 20px; /* Inner padding */
+  height: calc(100% - 30); /* Full height minus padding */
+  overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+
+
+
+.member-header {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  text-align: Left; /* Center-align the header text */
+}
+
+.member-item {
+  display: flex;
+  justify-content: left;
+  align-items: left;
+  margin-bottom: 10px;
+  padding: 5px;
+  border: 1px solid #ccc; /* Border for individual members */
+  border-radius: 6px;
+  background-color: #fff; /* White background for each item */
+}
+
+.member-item:last-child {
+  margin-bottom: 0; /* Remove bottom margin for the last item */
+}
+
+.add-member-button {
+  background-color: #4caf50; /* Green color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 5px;
+  cursor: pointer;
+  width: 85%; /* Full width for a prominent button */
+}
+
+.add-member-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+.delete-button {
+  width: 100px;
+  background-color: #ff4d4d; /* Red for delete */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  height: 45px;
+}
+
+.delete-button:hover {
+  background-color: #e60000; /* Darker red on hover */
+}
+
+.member-name {
+    width: 85px;
+}

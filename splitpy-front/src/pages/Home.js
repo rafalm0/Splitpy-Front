@@ -121,7 +121,6 @@ function Home() {
                 <p>Select a group from the sidebar to view details.</p>
               )
             }
-
           </div>
         </div>
       ) : (
