@@ -111,11 +111,9 @@ function Home() {
           </div>
           <div className="main-content">
             {selectedGroup ? (
-              <GroupHeader
-                group={selectedGroup}
-                onRename={handleRename}
-                onDelete={handleDelete}
-              />
+              <GroupHeader group={selectedGroup} onRename={handleRename} onDelete={handleDelete}/>
+                   // let's here work on the group, with the members etc
+
             ) : (
               <p>Select a group from the sidebar to view details.</p>
             )}
