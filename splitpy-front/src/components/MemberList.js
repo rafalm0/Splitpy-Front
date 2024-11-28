@@ -1,49 +1,70 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
+import AddMemberModal from "./AddMemberModal";
+import './MemberList.css';
 
 const MemberList = ({ groupId }) => {
   const [members, setMembers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchMembers = async () => {
-      const token = localStorage.getItem("token");
-
-      try {
-        const response = await axios.get(
-          `https://splitpy.onrender.com/group/${groupId}/member`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        setMembers(response.data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (groupId) {
-      fetchMembers();
+  const fetchMembers = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.get(
+        `https://splitpy.onrender.com/group/${groupId}/member`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setMembers(response.data);
+    } catch (error) {
+      console.error("Error fetching members:", error);
     }
+  };
+
+  const addMember = async (newMember) => {
+    const token = localStorage.getItem("token");
+    try {
+      await axios.post(
+        `https://splitpy.onrender.com/group/${groupId}/member`,
+        newMember,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      fetchMembers(); // Refresh the member list
+    } catch (error) {
+      console.error("Error adding member:", error);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchMembers();
   }, [groupId]);
 
-  if (loading) return <p>Loading members...</p>;
-  if (error) return <p>Error loading members: {error}</p>;
-  if (members.length === 0) return <p>No members in this group.</p>;
-
   return (
-    <div className="member-list">
-      <h4 className="text-lg font-semibold mb-4">Group Members</h4>
-      <ul className="list-disc pl-6">
+    <div>
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-xl font-semibold">Group Members</h3>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="px-4 py-2 bg-green-500 text-white rounded"
+        >
+          Add Member
+        </button>
+      </div>
+      <ul className="space-y-2">
         {members.map((member) => (
-          <li key={member.id} className="mb-2">
-            {member.name} ({member.email})
+          <li key={member.id} className="p-2 border rounded">
+            {member.name} | {member.email}
           </li>
         ))}
       </ul>
+      <AddMemberModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onAddMember={addMember}
+      />
     </div>
   );
 };
