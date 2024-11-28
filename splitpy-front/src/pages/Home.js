@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import NewGroupModal from "../components/NewGroupModal"; // Import the new modal
 import GroupHeader from "../components/GroupHeader"; // Import GroupHeader
+import MemberList from "../components/MemberList"; // Import GroupHeader
 import "./Home.css";
 
 function Home() {
@@ -110,13 +111,16 @@ function Home() {
             </button>
           </div>
           <div className="main-content">
-            {selectedGroup ? (
-              <GroupHeader group={selectedGroup} onRename={handleRename} onDelete={handleDelete}/>
-                   // let's here work on the group, with the members etc
-
-            ) : (
-              <p>Select a group from the sidebar to view details.</p>
-            )}
+            {
+              selectedGroup ? (
+                <>
+                  <GroupHeader group={selectedGroup} onRename={handleRename} onDelete={handleDelete} />
+                  <MemberList groupId={selectedGroup.id} />
+                </>
+              ) : (
+                <p>Select a group from the sidebar to view details.</p>
+              )
+            }
           </div>
         </div>
       ) : (
