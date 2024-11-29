@@ -7,7 +7,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow for card effect */
   background-color: #fff; /* White background for card-like appearance */
   margin-right: 15px; /* To shift the whole list a bit to the right */
-  width: 850px;
+  width: 65%;
   border: 1px solid #ddd; /* Light border for the card */
 }
 

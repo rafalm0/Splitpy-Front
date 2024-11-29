@@ -13,12 +13,17 @@ const TransactionList = ({ groupId }) => {
       try {
         const response = await axios.get(
           `https://splitpy.onrender.com/transaction`,
-          { group_id: groupId },
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        setTransactions(response.data);
+
+        // Filter transactions for the selected group
+        const filteredTransactions = response.data.filter(
+          (transaction) => transaction.group.id === groupId
+        );
+
+        setTransactions(filteredTransactions);
       } catch (error) {
         console.error("Error fetching transactions:", error);
       }
