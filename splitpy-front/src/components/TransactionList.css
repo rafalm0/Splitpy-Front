@@ -1,0 +1,50 @@
+.transaction-list {
+  float: right;
+  margin-left: auto; /* This pushes the list to the right */
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow for card effect */
+  background-color: #fff; /* White background for card-like appearance */
+  margin-right: 15px; /* To shift the whole list a bit to the right */
+  width: 850px;
+  border: 1px solid #ddd; /* Light border for the card */
+}
+
+.transaction-header {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #333; /* Slightly darker color for the header */
+}
+
+.add-transaction-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-size: 16px; /* Slightly larger text for the button */
+}
+
+.add-transaction-button:hover {
+  background-color: #45a049; /* Slight darken effect on hover */
+}
+
+.transaction-item {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px; /* Rounded corners for individual transactions */
+  background-color: #f9f9f9; /* Light background for each transaction */
+}
+
+.transaction-item p {
+  margin: 5px 0;
+  color: #555; /* Slightly gray text for better readability */
+}
+
+.transaction-item p strong {
+  color: #333; /* Darker color for labels like "Description", "Total Cost", etc. */
+}
