@@ -24,20 +24,27 @@ const TransactionList = ({ groupId }) => {
   };
 
   const handleAddTransaction = async (transaction) => {
-    const token = localStorage.getItem("token");
-    try {
-      await axios.post(
-        `https://splitpy.onrender.com/group/${groupId}/transaction`,
-        transaction,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      fetchTransactions(); // Refresh the list of transactions
-    } catch (error) {
-      console.error("Error adding transaction:", error);
-    }
-  };
+  const token = localStorage.getItem("token");
+  try {
+    // Add group_id to the transaction object
+    const payload = {
+      ...transaction,
+      group_id: groupId, // Include group_id in the JSON body
+    };
+
+    await axios.post(
+      `https://splitpy.onrender.com/transaction`, // Adjusted URL
+      payload,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    fetchTransactions(); // Refresh the list of transactions
+  } catch (error) {
+    console.error("Error adding transaction:", error);
+  }
+};
+
 
   useEffect(() => {
     fetchTransactions();

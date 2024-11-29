@@ -49,23 +49,31 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
   };
 
   const handleSubmit = () => {
-    if (!totalCost || !description) {
-      alert("Please fill in all the fields.");
-      return;
-    }
-    const transaction = {
-      totalCost,
-      description,
-      members: selectedMembers,
-      payers,
-    };
-    onAddTransaction(transaction);
-    setTotalCost("");
-    setDescription("");
-    setSelectedMembers([]);
-    setPayers([]);
-    onClose();
+  if (!totalCost || !description) {
+    alert("Please fill in all the fields.");
+    return;
+  }
+
+  // Create the members_raw array based on selectedMembers and payers
+  const membersRaw = members.map((member) => ({
+    member_id: member.id,
+    is_payer: payers.includes(member.id),
+  }));
+
+  const transaction = {
+    description,
+    price: parseFloat(totalCost),
+    group_id: groupId,
+    members_raw: membersRaw,
   };
+
+  onAddTransaction(transaction); // Send this structure to the backend
+  setTotalCost("");
+  setDescription("");
+  setSelectedMembers([]);
+  setPayers([]);
+  onClose();
+};
 
   if (!isOpen) return null;
 
