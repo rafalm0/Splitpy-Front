@@ -1,70 +1,41 @@
+/* Modal Overlay */
 .modal-overlay {
-  position: fixed;
+  position: fixed; /* Ensures the modal stays fixed on the screen */
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
+  display: flex; /* Centers the modal */
   justify-content: center;
   align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  z-index: 1000; /* Ensure the modal stays above other content */
 }
 
+/* Modal Content */
 .modal-content {
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
-  width: 400px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 300px; /* Set the width you want for the modal */
+  max-width: 50%; /* Ensure the modal is responsive */
+  box-sizing: border-box;
 }
 
-.input-group {
-  margin-bottom: 15px;
-}
-
-.input-group label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.input-group input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.member-list {
-  margin-bottom: 20px;
-}
-
-.member-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.member-item input {
-  margin-right: 10px;
-}
-
-.modal-footer {
-  display: flex;
-  justify-content: flex-end;
-}
-
+/* Optional: Styling for buttons */
 .cancel-button, .submit-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
+  padding: 8px 16px;
+  margin-top: 10px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
 .cancel-button {
   background-color: #ccc;
-  margin-right: 10px;
 }
 
 .submit-button {
-  background-color: #4CAF50;
-  color: #fff;
+  background-color: #007BFF;
+  color: white;
 }
