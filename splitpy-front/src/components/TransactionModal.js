@@ -9,7 +9,6 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
   const [selectedMembers, setSelectedMembers] = useState([]);
   const [payers, setPayers] = useState([]);
 
-  // Fetch members when modal opens
   useEffect(() => {
     if (isOpen) {
       const fetchMembers = async () => {
@@ -30,50 +29,47 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
     }
   }, [isOpen, groupId]);
 
-  const handleMemberChange = (memberId, isChecked, isPayer) => {
-    setSelectedMembers((prev) => {
-      if (isChecked) {
-        return [...prev, memberId];
-      }
-      return prev.filter((id) => id !== memberId);
-    });
+  const handleMemberChange = (memberId, isChecked) => {
+    setSelectedMembers((prev) =>
+      isChecked ? [...prev, memberId] : prev.filter((id) => id !== memberId)
+    );
+  };
 
-    if (isPayer) {
-      setPayers((prev) => {
-        if (isChecked) {
-          return [...prev, memberId];
-        }
-        return prev.filter((id) => id !== memberId);
-      });
+  const handlePayerChange = (memberId, isChecked) => {
+    setPayers((prev) =>
+      isChecked ? [...prev, memberId] : prev.filter((id) => id !== memberId)
+    );
+  };
+
+  const handleSubmit = async () => {
+    if (!totalCost || !description) {
+      alert("Please fill in all the fields.");
+      return;
+    }
+
+    const membersRaw = selectedMembers.map((memberId) => ({
+      member_id: memberId,
+      is_payer: payers.includes(memberId),
+    }));
+
+    const transaction = {
+      description,
+      price: parseFloat(totalCost),
+      group_id: groupId,
+      members_raw: membersRaw,
+    };
+
+    try {
+      await onAddTransaction(transaction);
+      setTotalCost("");
+      setDescription("");
+      setSelectedMembers([]);
+      setPayers([]);
+      onClose();
+    } catch (error) {
+      console.error("Error creating transaction:", error);
     }
   };
-
-  const handleSubmit = () => {
-  if (!totalCost || !description) {
-    alert("Please fill in all the fields.");
-    return;
-  }
-
-  // Create the members_raw array based on selectedMembers and payers
-  const membersRaw = members.map((member) => ({
-    member_id: member.id,
-    is_payer: payers.includes(member.id),
-  }));
-
-  const transaction = {
-    description,
-    price: parseFloat(totalCost),
-    group_id: groupId,
-    members_raw: membersRaw,
-  };
-
-  onAddTransaction(transaction); // Send this structure to the backend
-  setTotalCost("");
-  setDescription("");
-  setSelectedMembers([]);
-  setPayers([]);
-  onClose();
-};
 
   if (!isOpen) return null;
 
@@ -106,17 +102,13 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
             <div key={member.id} className="member-item">
               <input
                 type="checkbox"
-                onChange={(e) =>
-                  handleMemberChange(member.id, e.target.checked, false)
-                }
+                onChange={(e) => handleMemberChange(member.id, e.target.checked)}
               />
               <label>{member.name}</label>
               <input
                 type="checkbox"
                 disabled={!selectedMembers.includes(member.id)}
-                onChange={(e) =>
-                  handleMemberChange(member.id, e.target.checked, true)
-                }
+                onChange={(e) => handlePayerChange(member.id, e.target.checked)}
               />
               <label>Payer</label>
             </div>

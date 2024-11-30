@@ -71,9 +71,6 @@ const TransactionList = ({ groupId }) => {
               <p><strong>Description:</strong> {transaction.description}</p>
               <p><strong>Total Cost:</strong> ${transaction.price.toFixed(2)}</p>
               <p>
-                <strong>Group:</strong> {transaction.group.name}
-              </p>
-              <p>
                 <strong>Involved Members:</strong>{" "}
                 {transaction.members.map((member) => member.name).join(", ")}
               </p>
