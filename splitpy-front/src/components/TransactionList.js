@@ -20,7 +20,7 @@ const TransactionList = ({ groupId }) => {
 
         // Filter transactions for the selected group
         const filteredTransactions = response.data.filter(
-          (transaction) => transaction.group.id === groupId
+          (transaction) => transaction.group_id === groupId
         );
 
         setTransactions(filteredTransactions);
