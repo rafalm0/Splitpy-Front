@@ -4,6 +4,7 @@ import axios from "axios";
 import NewGroupModal from "../components/NewGroupModal"; // Import the new modal
 import GroupHeader from "../components/GroupHeader"; // Import GroupHeader
 import MemberList from "../components/MemberList"; // Import GroupHeader
+import TransactionList from "../components/TransactionList";
 import "./Home.css";
 
 function Home() {
@@ -116,6 +117,7 @@ function Home() {
                 <>
                   <GroupHeader group={selectedGroup} onRename={handleRename} onDelete={handleDelete} />
                   <MemberList groupId={selectedGroup.id} />
+                  <TransactionList groupId={selectedGroup.id} /> {/* Add TransactionList here */}
                 </>
               ) : (
                 <p>Select a group from the sidebar to view details.</p>

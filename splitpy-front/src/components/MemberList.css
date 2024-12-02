@@ -1,27 +1,16 @@
-.main-content {
-  padding-top: 10px; /* Add padding to ensure space for the header */
-  position: relative; /* Set the parent container to relative */
-  padding: 20px;
-  background-color: #f4f4f4; /* Background color for distinction */
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
 
-/* MemberList.css */
 .member-list {
-  position: absolute; /* Fixes it inside the parent container */
-  top: 30; /* Align at the top */
-  left: 5; /* Align at the left inside the parent */
-  width: 250px; /* Fixed width for the card-like component */
-  background-color: #ffffff; /* Card-like background */
-  border: 1px solid #ddd; /* Subtle border */
+  float: left;
+  margin-right: auto; /* This pushes the list to the right */
+  margin-top: 20px;
+  padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
-  padding: 20px; /* Inner padding */
-  height: calc(100% - 30); /* Full height minus padding */
-  overflow-y: auto; /* Allow scrolling if content overflows */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow for card effect */
+  background-color: #fff; /* White background for card-like appearance */
+  margin-right: 15px; /* To shift the whole list a bit to the right */
+  width: 20%;
+  border: 1px solid #ddd; /* Light border for the card */
 }
-
 
 
 
@@ -33,6 +22,8 @@
 }
 
 .member-item {
+  width: 95%;
+  float: left;
   display: flex;
   justify-content: left;
   align-items: left;
@@ -48,13 +39,14 @@
 }
 
 .add-member-button {
+  margin-left: 0%;
   background-color: #4caf50; /* Green color */
   color: white;
   border: none;
   border-radius: 5px;
   padding: 10px 5px;
   cursor: pointer;
-  width: 85%; /* Full width for a prominent button */
+  width: 100%; /* Full width for a prominent button */
 }
 
 .add-member-button:hover {
@@ -62,7 +54,7 @@
 }
 
 .delete-button {
-  width: 100px;
+  width: 100%;
   background-color: #ff4d4d; /* Red for delete */
   color: white;
   border: none;
