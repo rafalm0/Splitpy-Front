@@ -29,6 +29,23 @@ const TransactionList = ({ groupId }) => {
       }
     };
 
+  // Handle Delete Transaction
+  const handleDelTransaction = async (transactionId) => {
+    const token = localStorage.getItem("token");
+    try {
+      await axios.delete(
+        `https://splitpy.onrender.com/transaction/${transactionId}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      await fetchTransactions(); // Refresh the list of transactions
+    } catch (error) {
+      console.error("Error deleting transaction:", error);
+    }
+  };
+
+
+
+  // Add Transaction (from previous implementation)
   const handleAddTransaction = async (transaction) => {
   const token = localStorage.getItem("token");
   try {
@@ -74,6 +91,11 @@ const TransactionList = ({ groupId }) => {
                 <strong>Involved Members:</strong>{" "}
                 {transaction.members.map((member) => member.name).join(", ")}
               </p>
+              <button
+              className="delete-transaction-button"
+              onClick={() => handleDelTransaction(transaction.id)}>
+              Delete Transaction
+            </button>
             </li>
           ))}
         </ul>
