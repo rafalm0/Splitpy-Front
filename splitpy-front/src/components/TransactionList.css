@@ -9,7 +9,12 @@
   margin-right: 15px; /* To shift the whole list a bit to the right */
   width: 65%;
   border: 1px solid #ddd; /* Light border for the card */
+  max-height: 80vh; /* Adjust based on your layout needs */
+  overflow-y: auto; /* Adds a scrollbar when needed */
 }
+
+
+
 
 .transaction-header {
   font-size: 1.5em;
@@ -47,4 +52,19 @@
 
 .transaction-item p strong {
   color: #333; /* Darker color for labels like "Description", "Total Cost", etc. */
+}
+
+
+.delete-transaction-button {
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.delete-transaction-button:hover {
+  background-color: #ff7875;
 }
