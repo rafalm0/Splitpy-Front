@@ -9,7 +9,7 @@
   margin-right: 15px; /* To shift the whole list a bit to the right */
   width: 65%;
   border: 1px solid #ddd; /* Light border for the card */
-  max-height: 80vh; /* Adjust based on your layout needs */
+  max-height: 75vh; /* Adjust based on your layout needs */
   overflow-y: auto; /* Adds a scrollbar when needed */
 }
 
