@@ -16,13 +16,21 @@
 }
 
 .rename-button,
+.balance-button,
 .delete-button {
   padding: 10px 20px;
+  width: 100px;
   font-size: 1em;
   cursor: pointer;
   border: none;
   border-radius: 5px;
 }
+
+.balance-button {
+  background-color: #4CAF50; /* Green */
+  color: white;
+}
+
 
 .rename-button {
   background-color: #4CAF50; /* Green */
@@ -37,8 +45,4 @@
 .rename-button:hover,
 .delete-button:hover {
   opacity: 0.8; /* Slight opacity change on hover */
-}
-
-.px-4 py-2 text-white bg-red-500 rounded {
-
 }

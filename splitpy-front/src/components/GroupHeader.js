@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import axios from "axios";
 import RenameGroupModal from "./RenameGroupModal";
 import "./GroupHeader.css";
+import BalanceModal from "./BalanceModal"
 
 const GroupHeader = ({ group }) => {
   const [isDeleted, setIsDeleted] = useState(false); // Track if the group is deleted
   const [isRenameModalOpen, setIsRenameModalOpen] = useState(false); // Track modal state
+  const [isBalanceModalOpen, setIsBalanceModalOpen] = useState(false);
 
   const handleDelete = async () => {
     const token = localStorage.getItem("token");
@@ -42,7 +44,18 @@ const GroupHeader = ({ group }) => {
   return (
     <div className="group-header flex items-center justify-between p-2 border-b">
       <h3 className="text-2xl font-semibold">{group.name}</h3>
+
       <div className="group-header">
+        <button className="balance-button"
+          onClick={() => setIsBalanceModalOpen(true)}
+        >
+          Show Balance
+        </button>
+        <BalanceModal
+          isOpen={isBalanceModalOpen}
+          onClose={() => setIsBalanceModalOpen(false)}
+          groupId={group.id}
+        />
         <button
           onClick={() => setIsRenameModalOpen(true)}
           className="rename-button"
