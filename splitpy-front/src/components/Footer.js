@@ -9,7 +9,7 @@ function Footer() {
         <p>Phone: +1 (438) 528-3542</p>
       </div>
       <div className="footer-links">
-        <p>&copy; 2024 Split Py. All rights reserved.</p>
+        <p>&copy; 2024 Settle Up. All rights reserved.</p>
       </div>
     </footer>
   );

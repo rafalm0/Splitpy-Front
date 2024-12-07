@@ -23,7 +23,7 @@ function Header() {
     <header className="header">
       <div className="logo">
         <Link to="/" className="logo-link">
-          Split Py
+          Settle Up
         </Link>
       </div>
       <nav>

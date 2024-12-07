@@ -127,21 +127,20 @@ function Home() {
         </div>
       ) : (
         <div className="intro">
-          <h1>Welcome to Split Py!</h1>
+          <h1>Welcome to Settle Up!</h1>
           <p className="catchphrase">
             Easily split your transactions and manage your expenses.
           </p>
           <p className="description">
             Whether you're splitting dinner with friends, or managing shared
-            costs with your group, Split Py makes it simple and transparent for
+            costs with your group, Settle Up makes it simple and transparent for
             everyone involved.
           </p>
 
           <section className="cta">
-            <h2>Ready to Start Splitting?</h2>
+            <h2>Ready to Start Settling?</h2>
             <p>
-              Join thousands of others who are using Split Py to simplify their
-              expenses.
+              Join us for free and simplify your expenses.
             </p>
             <Link to="/login">
               <button>Get Started</button>
