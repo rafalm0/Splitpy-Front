@@ -4,6 +4,8 @@ import "./TransactionModal.css";
 
 const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
   const [totalCost, setTotalCost] = useState("");
+  const [equalConsumption, setEqualConsumption] = useState(true);
+  const [amounts, setAmounts] = useState({});
   const [description, setDescription] = useState("");
   const [members, setMembers] = useState([]);
   const [selectedMembers, setSelectedMembers] = useState([]);
@@ -41,6 +43,27 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
     );
   };
 
+  const handleEqualConsumptionChange = (isChecked) => {
+    if (selectedMembers.length === 0 || totalCost === "") {
+    alert("Please select members and enter a total cost first.");
+    return;
+    }
+
+    // Distribute the total cost equally among selected members
+    const perMember = totalCost / selectedMembers.length || 0;
+    setAmounts((prev) => {
+      const updated = { ...prev };
+      selectedMembers.forEach((memberId) => {
+        updated[memberId] = {
+          ...updated[memberId],
+          consumed: perMember, // Set equal consumption
+        };
+      });
+      return updated;
+    });
+
+};
+
   const handleSubmit = async () => {
     if (!totalCost || !description) {
       alert("Please fill in all the fields.");
@@ -54,7 +77,6 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
 
     const transaction = {
       description,
-      price: parseFloat(totalCost),
       group_id: groupId,
       members_raw: membersRaw,
     };
@@ -78,6 +100,8 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
       <div className="modal-content">
         <h2 className="modal-title">Create Transaction</h2>
         <div className="input-group">
+        <div className="price-control">
+        <div className="input-group">
           <label>Total Cost</label>
           <input
             type="number"
@@ -85,6 +109,11 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
             onChange={(e) => setTotalCost(e.target.value)}
             placeholder="Enter total cost"
           />
+        </div>
+          <button onClick={handleEqualConsumptionChange} className="distribute-button">
+            Distribute Consumption
+        </button>
+        </div>
         </div>
         <div className="input-group">
           <label>Description</label>
@@ -103,14 +132,40 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
               <input
                 type="checkbox"
                 onChange={(e) => handleMemberChange(member.id, e.target.checked)}
-              />
-              <label>{member.name}</label>
+              /><label>{member.name}</label>
+
               <input
-                type="checkbox"
+                type="number"
                 disabled={!selectedMembers.includes(member.id)}
-                onChange={(e) => handlePayerChange(member.id, e.target.checked)}
+
+                onChange={(e) =>
+                    setAmounts((prev) => ({
+                        ...prev,
+                        [member.id]: {
+                        ...prev[member.id],
+                        paid: parseFloat(e.target.value) || 0,},
+                    }))
+
+                }
+                placeholder="Paid"
               />
-              <label>Payer</label>
+
+              <input
+                type="number"
+                disabled={!selectedMembers.includes(member.id)}
+                value={parseFloat(amounts[member.id]?.consumed.toFixed(2)) || ""}
+                onChange={(e) =>
+                    setAmounts((prev) => ({
+                        ...prev,
+                        [member.id]: {
+                        ...prev[member.id],
+                        consumed: parseFloat(e.target.value) || 0,},
+                    }))
+
+                }
+                placeholder="Consumed"
+              />
+
             </div>
           ))}
         </div>
