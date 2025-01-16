@@ -12,18 +12,15 @@ const TransactionList = ({ groupId }) => {
       const token = localStorage.getItem("token");
       try {
         const response = await axios.get(
-          `https://splitpy.onrender.com/transaction`,
+          `https://splitpy.onrender.com/group/${groupId}/transactions`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
 
-        // Filter transactions for the selected group
-        const filteredTransactions = response.data.filter(
-          (transaction) => transaction.group_id === groupId
-        );
 
-        setTransactions(filteredTransactions);
+
+        setTransactions(response.data);
       } catch (error) {
         console.error("Error fetching transactions:", error);
       }
@@ -86,11 +83,16 @@ const TransactionList = ({ groupId }) => {
           {transactions.map((transaction) => (
             <li key={transaction.id} className="transaction-item">
               <p><strong>Description:</strong> {transaction.description}</p>
-              <p><strong>Total Cost:</strong> ${transaction.price !== undefined ? transaction.price.toFixed(2) : ""}</p>
-              <p>
-                <strong>Involved Members:</strong>{" "}
-                {transaction.members.map((member) => member.name).join(", ")}
-              </p>
+              <p><strong>Total Cost:</strong> ${transaction.price}</p>
+              <ul className="member-list">
+              {transaction.members.map((member, index) => (
+                 <li key={index}>
+                  <span><strong>Name:</strong> {member.name}</span> -
+                  <span> <strong>Paid:</strong> ${member.paid.toFixed(2)}</span> -
+                  <span> <strong>Consumed:</strong> ${member.consumed.toFixed(2)}</span>
+                 </li>
+                ))}
+              </ul>
 
               <button
               className="delete-transaction-button"
