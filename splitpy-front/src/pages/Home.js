@@ -116,8 +116,10 @@ function Home() {
               selectedGroup ? (
                 <>
                   <GroupHeader group={selectedGroup} onRename={handleRename} onDelete={handleDelete} />
+                  <div className="lists">
                   <MemberList groupId={selectedGroup.id} />
                   <TransactionList groupId={selectedGroup.id} /> {/* Add TransactionList here */}
+                  </div>
                 </>
               ) : (
                 <p>Select a group from the sidebar to view details.</p>

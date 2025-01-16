@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header'; // Assuming your Header component is in the components folder
-import Footer from './components/Footer';
 import About from './pages/About'; // Import the About page
 import Home from './pages/Home'; // Your existing Home page component
 import Login from './pages/Login';  // Your new LoginPage component

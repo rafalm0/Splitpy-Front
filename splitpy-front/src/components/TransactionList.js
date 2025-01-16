@@ -86,17 +86,10 @@ const TransactionList = ({ groupId }) => {
           {transactions.map((transaction) => (
             <li key={transaction.id} className="transaction-item">
               <p><strong>Description:</strong> {transaction.description}</p>
-              <p><strong>Total Cost:</strong> ${transaction.price.toFixed(2)}</p>
+              <p><strong>Total Cost:</strong> ${transaction.price !== undefined ? transaction.price.toFixed(2) : ""}</p>
               <p>
                 <strong>Involved Members:</strong>{" "}
                 {transaction.members.map((member) => member.name).join(", ")}
-              </p>
-              <p>
-              <strong>Payers:</strong>{" "}
-              {transaction.members
-                .filter((member) => member.is_payer) // Filter to only include payers
-                .map((payer) => payer.name) // Map to get their names
-                .join(", ")} {/* Join the names into a single string */}
               </p>
 
               <button

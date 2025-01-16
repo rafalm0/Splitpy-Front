@@ -3,6 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem; /* Adjust padding if needed */
+  gap: 5%;
   border-bottom: 1px solid #ddd;
 }
 

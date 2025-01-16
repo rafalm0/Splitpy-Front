@@ -4,12 +4,10 @@ import "./TransactionModal.css";
 
 const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
   const [totalCost, setTotalCost] = useState("");
-  const [equalConsumption, setEqualConsumption] = useState(true);
   const [amounts, setAmounts] = useState({});
   const [description, setDescription] = useState("");
   const [members, setMembers] = useState([]);
   const [selectedMembers, setSelectedMembers] = useState([]);
-  const [payers, setPayers] = useState([]);
 
   useEffect(() => {
     if (isOpen) {
@@ -37,11 +35,7 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
     );
   };
 
-  const handlePayerChange = (memberId, isChecked) => {
-    setPayers((prev) =>
-      isChecked ? [...prev, memberId] : prev.filter((id) => id !== memberId)
-    );
-  };
+
 
   const handleEqualConsumptionChange = (isChecked) => {
     if (selectedMembers.length === 0 || totalCost === "") {
@@ -71,22 +65,23 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
     }
 
     const membersRaw = selectedMembers.map((memberId) => ({
-      member_id: memberId,
-      is_payer: payers.includes(memberId),
-    }));
+    member_id: memberId,
+    amount_paid: amounts[memberId]?.paid || 0, // Get paid value or default to 0
+    amount_consumed: amounts[memberId]?.consumed || 0, // Get consumed value or default to 0
+  }));
 
-    const transaction = {
-      description,
-      group_id: groupId,
-      members_raw: membersRaw,
-    };
+  const transaction = {
+    description,
+    group_id: groupId,
+    members_raw: membersRaw, // Use the correctly formatted membersRaw
+  };
 
     try {
       await onAddTransaction(transaction);
       setTotalCost("");
       setDescription("");
       setSelectedMembers([]);
-      setPayers([]);
+      setAmounts({});
       onClose();
     } catch (error) {
       console.error("Error creating transaction:", error);
@@ -153,7 +148,10 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
               <input
                 type="number"
                 disabled={!selectedMembers.includes(member.id)}
-                value={parseFloat(amounts[member.id]?.consumed.toFixed(2)) || ""}
+
+                value={amounts[member.id]?.consumed !== undefined
+                       ? parseFloat(amounts[member.id].consumed).toFixed(2)
+                       : ""}
                 onChange={(e) =>
                     setAmounts((prev) => ({
                         ...prev,
