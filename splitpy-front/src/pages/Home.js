@@ -108,7 +108,7 @@ function Home() {
               onClick={() => setShowModal(true)}
               className="create-group-button"
             >
-              Create New Group
+              Add Group
             </button>
           </div>
           <div className="main-content">
