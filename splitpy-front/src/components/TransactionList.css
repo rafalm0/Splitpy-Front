@@ -33,6 +33,15 @@
   font-size: 16px; /* Slightly larger text for the button */
 }
 
+.member-mini-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 350px;
+  gap: 5px; /* Adds space between member items */
+  margin-top: 5px;
+}
+
 .add-transaction-button:hover {
   background-color: #45a049; /* Slight darken effect on hover */
 }

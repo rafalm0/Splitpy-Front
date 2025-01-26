@@ -84,12 +84,12 @@ const TransactionList = ({ groupId }) => {
             <li key={transaction.id} className="transaction-item">
               <p><strong>Description:</strong> {transaction.description}</p>
               <p><strong>Total Cost:</strong> ${transaction.price}</p>
-              <ul className="member-list">
+              <ul className="member-mini-list">
               {transaction.members.map((member, index) => (
                  <li key={index}>
-                  <span><strong>Name:</strong> {member.name}</span> -
-                  <span> <strong>Paid:</strong> ${member.paid.toFixed(2)}</span> -
-                  <span> <strong>Consumed:</strong> ${member.consumed.toFixed(2)}</span>
+                  <span><strong> {member.name} </strong></span> | <strong>Paid: </strong>
+                  <span>${member.paid.toFixed(2)}</span> | <strong>Consumed: </strong>
+                  <span>${member.consumed.toFixed(2)}</span>
                  </li>
                 ))}
               </ul>

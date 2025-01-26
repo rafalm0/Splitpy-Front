@@ -20,41 +20,48 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   width: 300px; /* Set the width you want for the modal */
   max-width: 85%; /* Ensure the modal is responsive */
+  max-height: 85%;
   box-sizing: border-box;
+  overflow: "auto";
+}
+
+.transaction-modal-price-control {
+  display: flex;
+  flex-direction: row;
 }
 
 
-
-.input-group {
+.transaction-modal-input-group {
   min-width:50%;
 }
 /* Optional: Styling for buttons */
-.cancel-button, .submit-button {
+.transaction-modal-cancel-button, .transaction-modal-submit-button {
   padding: 8px 16px;
   margin-top: 10px;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.cancel-button {
+.transaction-modal-cancel-button {
   background-color: #ccc;
 }
 
-.submit-button {
+.transaction-modal-submit-button {
   background-color: #007BFF;
   color: white;
 }
 
-.member-list {
-  display: flex;
-  flex-direction: column;
-  width: 75%;
-  max-width: 350px;
-  gap: 15px; /* Adds space between member items */
-  margin-top: 10px;
+.transaction-modal-member-list {
+  max-height: 300px; /* Set your desired max height */
+  overflow-y: auto; /* Enables vertical scrolling */
+  margin-top: 10px; /* Optional: Adds spacing above the list */
+  padding: 10px;
+  border: 1px solid #ddd; /* Optional: Matches the style of items */
+  border-radius: 5px; /* Optional: Matches the style of items */
+  background-color: #f1f1f1; /* Optional: Slightly different background to highlight the list */
 }
 
-.member-item {
+.transaction-modal-member-item {
   display: flex;
   width: 98%;
   align-items: center;
@@ -70,11 +77,11 @@
   flex-direction: row;
 }
 
-.member-item input[type="checkbox"] {
+.transaction-modal-member-item input[type="checkbox"] {
   margin-right: 5px; /* Adds space between the checkbox and label */
 }
 
-.member-item input[type="number"] {
+.transaction-modal-member-item input[type="number"] {
   min-width: 100px; /* Sets a minimum width for the number inputs */
   padding: 5px;
   border: 1px solid #ccc;
@@ -82,13 +89,13 @@
   text-align: left; /* Aligns numbers to the right for better readability */
 }
 
-.member-item label {
+.transaction-modal-member-item label {
   margin-right: 10px; /* Adds space between label and the next input */
   font-weight: bold;
   font-size: 14px;
 }
 
-.member-item input[type="number"]:disabled {
+.transaction-modal-member-item input[type="number"]:disabled {
   background-color: #e9e9e9; /* Gray background for disabled inputs */
   cursor: not-allowed;
 }

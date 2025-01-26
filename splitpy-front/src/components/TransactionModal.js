@@ -35,12 +35,10 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
     );
   };
 
-
-
   const handleEqualConsumptionChange = (isChecked) => {
     if (selectedMembers.length === 0 || totalCost === "") {
-    alert("Please select members and enter a total cost first.");
-    return;
+      alert("Please select members and enter a total cost first.");
+      return;
     }
 
     // Distribute the total cost equally among selected members
@@ -55,8 +53,7 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
       });
       return updated;
     });
-
-};
+  };
 
   const handleSubmit = async () => {
     if (!totalCost || !description) {
@@ -65,16 +62,16 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
     }
 
     const membersRaw = selectedMembers.map((memberId) => ({
-    member_id: memberId,
-    amount_paid: amounts[memberId]?.paid || 0, // Get paid value or default to 0
-    amount_consumed: amounts[memberId]?.consumed || 0, // Get consumed value or default to 0
-  }));
+      member_id: memberId,
+      amount_paid: amounts[memberId]?.paid || 0, // Get paid value or default to 0
+      amount_consumed: amounts[memberId]?.consumed || 0, // Get consumed value or default to 0
+    }));
 
-  const transaction = {
-    description,
-    group_id: groupId,
-    members_raw: membersRaw, // Use the correctly formatted membersRaw
-  };
+    const transaction = {
+      description,
+      group_id: groupId,
+      members_raw: membersRaw, // Use the correctly formatted membersRaw
+    };
 
     try {
       await onAddTransaction(transaction);
@@ -93,24 +90,24 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2 className="modal-title">Create Transaction</h2>
-        <div className="input-group">
-        <div className="price-control">
-        <div className="input-group">
-          <label>Total Cost</label>
-          <input
-            type="number"
-            value={totalCost}
-            onChange={(e) => setTotalCost(e.target.value)}
-            placeholder="Enter total cost"
-          />
+        <h2 className="transaction-modal-title">Create Transaction</h2>
+        <div className="transaction-modal-input-group">
+          <div className="transaction-modal-price-control">
+            <div className="transaction-modal-input-group">
+              <label>Total Cost</label>
+              <input
+                type="number"
+                value={totalCost}
+                onChange={(e) => setTotalCost(e.target.value)}
+                placeholder="Enter total cost"
+              />
+            </div>
+            <button onClick={handleEqualConsumptionChange} className="transaction-modal-distribute-button">
+              Distribute Consumption
+            </button>
+          </div>
         </div>
-          <button onClick={handleEqualConsumptionChange} className="distribute-button">
-            Distribute Consumption
-        </button>
-        </div>
-        </div>
-        <div className="input-group">
+        <div className="transaction-modal-input-group">
           <label>Description</label>
           <input
             type="text"
@@ -121,26 +118,26 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
         </div>
 
         <h3>Involved Members</h3>
-        <div className="member-list">
+        <div className="transaction-modal-member-list">
           {members.map((member) => (
-            <div key={member.id} className="member-item">
+            <div key={member.id} className="transaction-modal-member-item">
               <input
                 type="checkbox"
                 onChange={(e) => handleMemberChange(member.id, e.target.checked)}
-              /><label>{member.name}</label>
+              />
+              <label>{member.name}</label>
 
               <input
                 type="number"
                 disabled={!selectedMembers.includes(member.id)}
-
                 onChange={(e) =>
-                    setAmounts((prev) => ({
-                        ...prev,
-                        [member.id]: {
-                        ...prev[member.id],
-                        paid: parseFloat(e.target.value) || 0,},
-                    }))
-
+                  setAmounts((prev) => ({
+                    ...prev,
+                    [member.id]: {
+                      ...prev[member.id],
+                      paid: parseFloat(e.target.value) || 0,
+                    },
+                  }))
                 }
                 placeholder="Paid"
               />
@@ -148,31 +145,31 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
               <input
                 type="number"
                 disabled={!selectedMembers.includes(member.id)}
-
-                value={amounts[member.id]?.consumed !== undefined
-                       ? parseFloat(amounts[member.id].consumed).toFixed(2)
-                       : ""}
+                value={
+                  amounts[member.id]?.consumed !== undefined
+                    ? parseFloat(amounts[member.id].consumed).toFixed(2)
+                    : ""
+                }
                 onChange={(e) =>
-                    setAmounts((prev) => ({
-                        ...prev,
-                        [member.id]: {
-                        ...prev[member.id],
-                        consumed: parseFloat(e.target.value) || 0,},
-                    }))
-
+                  setAmounts((prev) => ({
+                    ...prev,
+                    [member.id]: {
+                      ...prev[member.id],
+                      consumed: parseFloat(e.target.value) || 0,
+                    },
+                  }))
                 }
                 placeholder="Consumed"
               />
-
             </div>
           ))}
         </div>
 
-        <div className="modal-footer">
-          <button onClick={onClose} className="cancel-button">
+        <div className="transaction-modal-modal-footer">
+          <button onClick={onClose} className="transaction-modal-cancel-button">
             Cancel
           </button>
-          <button onClick={handleSubmit} className="submit-button">
+          <button onClick={handleSubmit} className="transaction-modal-submit-button">
             Create Transaction
           </button>
         </div>

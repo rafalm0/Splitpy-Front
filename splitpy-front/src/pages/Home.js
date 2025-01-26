@@ -84,7 +84,7 @@ function Home() {
       {isAuthenticated ? (
         <div className="home-content">
           <div className="sidebar">
-            <h2>Your Groups</h2>
+            <h2>Groups</h2>
             {errorMessage ? (
               <p>{errorMessage}</p>
             ) : (

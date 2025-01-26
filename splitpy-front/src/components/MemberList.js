@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AddMemberModal from "./AddMemberModal";
+import DeleteBin from "../assets/delete-bin-line.svg"
 import "./MemberList.css";
 
 const MemberList = ({ groupId }) => {
@@ -56,8 +57,7 @@ const MemberList = ({ groupId }) => {
 
   return (
     <div className="member-list">
-      <h3 className="member-header">Group Members</h3>
-      <ul>
+      <h3 className="member-header">Members</h3>
         {members.map((member) => (
           <li key={member.id} className="member-item">
             <span>
@@ -67,11 +67,10 @@ const MemberList = ({ groupId }) => {
               onClick={() => handleDeleteMember(member.id)}
               className="delete-button"
             >
-              Delete
+              <img src={DeleteBin} alt="delete icon" />
             </button>
           </li>
         ))}
-      </ul>
       <button
         onClick={() => setIsModalOpen(true)}
         className="add-member-button"
