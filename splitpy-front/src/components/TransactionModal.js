@@ -117,6 +117,15 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
           />
         </div>
 
+        <div className="transaction-modal-modal-footer">
+          <button onClick={onClose} className="transaction-modal-cancel-button">
+            Cancel
+          </button>
+          <button onClick={handleSubmit} className="transaction-modal-submit-button">
+            Create Transaction
+          </button>
+        </div>
+
         <h3>Involved Members</h3>
         <div className="transaction-modal-member-list">
           {members.map((member) => (
@@ -165,14 +174,7 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
           ))}
         </div>
 
-        <div className="transaction-modal-modal-footer">
-          <button onClick={onClose} className="transaction-modal-cancel-button">
-            Cancel
-          </button>
-          <button onClick={handleSubmit} className="transaction-modal-submit-button">
-            Create Transaction
-          </button>
-        </div>
+
       </div>
     </div>
   );
