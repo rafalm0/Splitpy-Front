@@ -43,7 +43,7 @@
 }
 
 .transaction-modal-cancel-button {
-  background-color: #ccc;
+  background-color: #f76459;
 }
 
 .transaction-modal-submit-button {
@@ -64,7 +64,7 @@
 .transaction-modal-member-item {
   display: flex;
   width: 98%;
-  align-items: center;
+  align-items: left;
   gap: 10px; /* Adds space between inputs and labels */
   padding: 5px;
   border: 1px solid #ddd;
@@ -79,16 +79,21 @@
 
 .transaction-modal-member-item input[type="checkbox"] {
   margin-right: 5px; /* Adds space between the checkbox and label */
+  width:75px;
 }
 
 .transaction-modal-member-item input[type="number"] {
-  min-width: 100px; /* Sets a minimum width for the number inputs */
+  min-width: 50px; /* Sets a minimum width for the number inputs */
+  max-width: 150px; /* Sets a minimum width for the number inputs */
+  width: 25%;
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
   text-align: left; /* Aligns numbers to the right for better readability */
 }
-
+.member-name {
+  font-size: 50px;
+}
 .transaction-modal-member-item label {
   margin-right: 10px; /* Adds space between label and the next input */
   font-weight: bold;

@@ -134,7 +134,7 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
                 type="checkbox"
                 onChange={(e) => handleMemberChange(member.id, e.target.checked)}
               />
-              <label>{member.name}</label>
+              <label className="member-name">{member.name} </label>
 
               <input
                 type="number"
