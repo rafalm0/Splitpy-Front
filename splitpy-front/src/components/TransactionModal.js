@@ -96,7 +96,7 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
             <div className="transaction-modal-input-group">
               <label>Total Cost</label>
               <input
-                type="number"
+                type="text"
                 value={totalCost}
                 onChange={(e) => setTotalCost(e.target.value)}
                 placeholder="Enter total cost"
@@ -137,7 +137,7 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
               <label className="member-name">{member.name} </label>
 
               <input
-                type="number"
+                type="text"
                 disabled={!selectedMembers.includes(member.id)}
                 onChange={(e) =>
                   setAmounts((prev) => ({
@@ -152,13 +152,8 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
               />
 
               <input
-                type="number"
+                type="text"
                 disabled={!selectedMembers.includes(member.id)}
-                value={
-                  amounts[member.id]?.consumed !== undefined
-                    ? parseFloat(amounts[member.id].consumed).toFixed(2)
-                    : ""
-                }
                 onChange={(e) =>
                   setAmounts((prev) => ({
                     ...prev,

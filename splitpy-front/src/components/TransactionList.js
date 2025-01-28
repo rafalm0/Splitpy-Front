@@ -84,6 +84,7 @@ const TransactionList = ({ groupId }) => {
             <li key={transaction.id} className="transaction-item">
               <p><strong>Description:</strong> {transaction.description}</p>
               <p><strong>Total Cost:</strong> ${transaction.price}</p>
+              <p><strong>Date:</strong> {transaction.created_at}</p>
               <ul className="member-mini-list">
               {transaction.members.map((member, index) => (
                  <li key={index}>
