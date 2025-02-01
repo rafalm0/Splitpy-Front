@@ -41,8 +41,9 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
       return;
     }
 
-    // Distribute the total cost equally among selected members
-    const perMember = totalCost / selectedMembers.length || 0;
+    const numericTotalCost = parseFloat(totalCost) || 0; // Convert to a number safely
+    const perMember = numericTotalCost / selectedMembers.length || 0;
+
     setAmounts((prev) => {
       const updated = { ...prev };
       selectedMembers.forEach((memberId) => {
@@ -98,7 +99,7 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
               <input
                 type="text"
                 value={totalCost}
-                onChange={(e) => setTotalCost(e.target.value)}
+                onChange={(e) => setTotalCost(e.target.value).replace(/[^0-9.]/g, "")}
                 placeholder="Enter total cost"
               />
             </div>
