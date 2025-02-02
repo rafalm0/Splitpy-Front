@@ -11,6 +11,11 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
 
   useEffect(() => {
     if (isOpen) {
+      // Reset state when modal opens
+      setTotalCost("");
+      setDescription("");
+      setSelectedMembers([]);
+      setAmounts({});
       const fetchMembers = async () => {
         try {
           const token = localStorage.getItem("token");
