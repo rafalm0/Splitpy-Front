@@ -99,7 +99,7 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
               <input
                 type="text"
                 value={totalCost}
-                onChange={(e) => setTotalCost(e.target.value).replace(/[^0-9.]/g, "")}
+                onChange={(e) => setTotalCost(e.target.value)}
                 placeholder="Enter total cost"
               />
             </div>
@@ -155,6 +155,7 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
               <input
                 type="text"
                 disabled={!selectedMembers.includes(member.id)}
+                value={amounts[member.id]?.consumed || ""} // Display the updated value
                 onChange={(e) =>
                   setAmounts((prev) => ({
                     ...prev,
