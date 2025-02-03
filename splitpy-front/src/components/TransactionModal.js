@@ -8,6 +8,8 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
   const [description, setDescription] = useState("");
   const [members, setMembers] = useState([]);
   const [selectedMembers, setSelectedMembers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [retryCount, setRetryCount] = useState(0); // Retry counter
 
   useEffect(() => {
     if (isOpen) {
@@ -38,6 +40,16 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
     setSelectedMembers((prev) =>
       isChecked ? [...prev, memberId] : prev.filter((id) => id !== memberId)
     );
+  };
+
+  // Function to handle retry logic
+  const handleRetrySubmit = async () => {
+    if (retryCount < 3) { // Limit retries to 3
+      setRetryCount((prev) => prev + 1);
+      await handleSubmit(); // Retry the request
+    } else {
+      alert("Transaction failed after multiple attempts.");
+    }
   };
 
   const handleEqualConsumptionChange = (isChecked) => {
@@ -79,6 +91,8 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
       members_raw: membersRaw, // Use the correctly formatted membersRaw
     };
 
+    setIsLoading(true); // Start loading
+
     try {
       await onAddTransaction(transaction);
       setTotalCost("");
@@ -88,6 +102,8 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
       onClose();
     } catch (error) {
       console.error("Error creating transaction:", error);
+      setIsLoading(false); // Stop loading on error
+      handleRetrySubmit(); // Retry logic
     }
   };
 
@@ -127,8 +143,12 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
           <button onClick={onClose} className="transaction-modal-cancel-button">
             Cancel
           </button>
-          <button onClick={handleSubmit} className="transaction-modal-submit-button">
-            Create Transaction
+          <button
+            onClick={handleSubmit}
+            className="transaction-modal-submit-button"
+            disabled={isLoading}
+          >
+            {isLoading ? "Creating..." : "Create Transaction"} {/* Show loading text */}
           </button>
         </div>
 

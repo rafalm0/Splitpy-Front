@@ -25,6 +25,14 @@
   overflow: "auto";
 }
 
+.transaction-modal-modal-footer{
+  display: flex;
+  flex-direction: row;
+  gap: 300px;
+  padding: 8px;
+  spacing: 20%;
+}
+
 .transaction-modal-price-control {
   display: flex;
   flex-direction: row;
@@ -38,7 +46,9 @@
 .transaction-modal-cancel-button, .transaction-modal-submit-button {
   padding: 8px 16px;
   margin-top: 10px;
+  margin-right: 10px;
   border-radius: 5px;
+  height: 75px;
   cursor: pointer;
 }
 
