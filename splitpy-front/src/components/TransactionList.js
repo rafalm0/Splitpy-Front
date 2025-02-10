@@ -6,6 +6,8 @@ import "./TransactionList.css";
 const TransactionList = ({ groupId }) => {
   const [transactions, setTransactions] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingTransaction, setEditingTransaction] = useState(null);
+
 
   // Fetch transactions for the selected group
   const fetchTransactions = async () => {
@@ -19,8 +21,8 @@ const TransactionList = ({ groupId }) => {
         );
 
 
-
-        setTransactions(response.data);
+        const sortedTransactions = response.data.sort((a, b) => a.id - b.id);
+        setTransactions(sortedTransactions);
       } catch (error) {
         console.error("Error fetching transactions:", error);
       }
@@ -39,6 +41,45 @@ const TransactionList = ({ groupId }) => {
       console.error("Error deleting transaction:", error);
     }
   };
+
+  const handleEditTransaction = async (transactionId) => {
+  const token = localStorage.getItem("token");
+
+  try {
+    const response = await axios.get(
+      `https://splitpy.onrender.com/transaction/${transactionId}`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    const transactionData = response.data;
+
+    // Set editing state and open modal
+    setEditingTransaction(transactionData);
+    setIsModalOpen(true);
+
+  } catch (error) {
+    console.error("Error fetching transaction:", error);
+  }
+};
+
+const onEditTransaction = async (transactionId, updatedTransaction) => {
+  const token = localStorage.getItem("token");
+
+  try {
+    await axios.put(
+      `https://splitpy.onrender.com/transaction/${transactionId}`,
+      updatedTransaction,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    await fetchTransactions(); // Refresh transactions
+    setIsModalOpen(false);
+    setEditingTransaction(null); // Clear editing state
+
+  } catch (error) {
+    console.error("Error updating transaction:", error);
+  }
+};
 
 
 
@@ -82,33 +123,49 @@ const TransactionList = ({ groupId }) => {
       <ul>
           {transactions.map((transaction) => (
             <li key={transaction.id} className="transaction-item">
-              <p><strong>Description:</strong> {transaction.description}</p>
-              <p><strong>Total Cost:</strong> ${transaction.price}</p>
-              <p><strong>Date:</strong> {transaction.created_at}</p>
-              <ul className="member-mini-list">
-              {transaction.members.map((member, index) => (
-                 <li key={index}>
-                  <span><strong> {member.name} </strong></span> | <strong>Paid: </strong>
-                  <span>${member.paid.toFixed(2)}</span> | <strong>Consumed: </strong>
-                  <span>${member.consumed.toFixed(2)}</span>
-                 </li>
-                ))}
-              </ul>
+                <div className="transaction-item">
+                  <div className="mini-transaction-header">
+                  <p><strong>Description:</strong> {transaction.description}</p>
+                  <p><strong>Total Cost:</strong> ${transaction.price}</p>
+                  <p><strong>Date:</strong> {transaction.created_at}</p>
+                  </div>
+                  <ul className="member-mini-list">
+                  {transaction.members.map((member, index) => (
 
-              <button
-              className="delete-transaction-button"
-              onClick={() => handleDelTransaction(transaction.id)}>
-              Delete Transaction
-            </button>
-            </li>
+                     <li key={index}>
+                      <span><strong> {member.name} </strong></span> | <strong>Paid: </strong>
+                      <span>${member.paid.toFixed(2)}</span> | <strong>Consumed: </strong>
+                      <span>${member.consumed.toFixed(2)}</span>
+                     </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="transaction-buttons">
+                  <button className="delete-transaction-button"
+                  onClick={() => handleDelTransaction(transaction.id)}>
+                  Delete Transaction
+                  </button>
+
+                  <button className="edit-transaction-button"
+                  onClick={() => handleEditTransaction(transaction.id)}>
+                  Edit Transaction
+                  </button>
+                </div>
+                </li>
+
           ))}
         </ul>
 
       <TransactionModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          setIsModalOpen(false);
+          setEditingTransaction(null);
+        }}
         groupId={groupId}
         onAddTransaction={handleAddTransaction}
+        editingTransaction={editingTransaction}
+        onEditTransaction={onEditTransaction}
       />
     </div>
   );
