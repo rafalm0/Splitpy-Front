@@ -24,14 +24,17 @@ const MemberList = ({ groupId }) => {
   };
 
   const handleDeleteMember = async (memberId) => {
-    const token = localStorage.getItem("token");
-    try {
-      await axios.delete(`https://splitpy.onrender.com/member/${memberId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setMembers((prev) => prev.filter((member) => member.id !== memberId));
-    } catch (error) {
-      console.error("Error deleting member:", error);
+    const isConfirmed = window.confirm("Are you sure you want to delete this member?");
+    if (isConfirmed) {
+      const token = localStorage.getItem("token");
+      try {
+        await axios.delete(`https://splitpy.onrender.com/member/${memberId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setMembers((prev) => prev.filter((member) => member.id !== memberId));
+      } catch (error) {
+        console.error("Error deleting member:", error);
+      }
     }
   };
 

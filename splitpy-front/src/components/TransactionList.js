@@ -30,15 +30,18 @@ const TransactionList = ({ groupId }) => {
 
   // Handle Delete Transaction
   const handleDelTransaction = async (transactionId) => {
-    const token = localStorage.getItem("token");
-    try {
-      await axios.delete(
-        `https://splitpy.onrender.com/transaction/${transactionId}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      await fetchTransactions(); // Refresh the list of transactions
-    } catch (error) {
-      console.error("Error deleting transaction:", error);
+    const isConfirmed = window.confirm("Are you sure you want to delete this transaction?");
+    if (isConfirmed) {
+      const token = localStorage.getItem("token");
+      try {
+        await axios.delete(
+          `https://splitpy.onrender.com/transaction/${transactionId}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        await fetchTransactions(); // Refresh the list of transactions
+      } catch (error) {
+        console.error("Error deleting transaction:", error);
+      }
     }
   };
 
