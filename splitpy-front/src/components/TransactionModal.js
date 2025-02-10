@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./TransactionModal.css";
 
-const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
+const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction, editingTransaction, onEditTransaction }) => {
   const [totalCost, setTotalCost] = useState("");
   const [amounts, setAmounts] = useState({});
   const [description, setDescription] = useState("");
@@ -15,7 +15,7 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
     if (isOpen) {
       // Reset state when modal opens
       setTotalCost("");
-      setDescription("");
+      setDescription(editingTransaction?.description ?? "");
       setSelectedMembers([]);
       setAmounts({});
       const fetchMembers = async () => {
@@ -28,6 +28,30 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
             }
           );
           setMembers(response.data);
+
+          if (editingTransaction) {
+          console.log(editingTransaction);
+          setSelectedMembers(editingTransaction.members.map(m => m.id));
+          const updatedAmounts = editingTransaction.members.reduce((acc, member) => {
+            acc[member.id] = {
+              consumed: member.consumed ?? 0,
+              paid: member.paid ?? 0 // Ensures it takes the correct value
+
+            };
+            return acc;
+          }, {});
+          setAmounts(updatedAmounts); // Update amounts state
+
+          console.log("Editing Transaction Data:", editingTransaction); // Debugging
+          console.log("Updated Amounts State:", updatedAmounts); // Check if values are correct
+
+        } else {
+            // Reset to default when creating a new transaction
+            setSelectedMembers([]);
+            setAmounts({});
+        }
+
+
         } catch (error) {
           console.error("Error fetching members:", error);
         }
@@ -66,7 +90,7 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
       selectedMembers.forEach((memberId) => {
         updated[memberId] = {
           ...updated[memberId],
-          consumed: perMember, // Set equal consumption
+          consumed: parseFloat(perMember.toFixed(2)), // Round to 2 decimal places
         };
       });
       return updated;
@@ -81,8 +105,8 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
 
     const membersRaw = selectedMembers.map((memberId) => ({
       member_id: memberId,
-      amount_paid: amounts[memberId]?.paid || 0, // Get paid value or default to 0
-      amount_consumed: amounts[memberId]?.consumed || 0, // Get consumed value or default to 0
+      amount_paid: parseFloat(amounts[memberId]?.paid) || 0,
+      amount_consumed: parseFloat(amounts[memberId]?.consumed) || 0, // Convert safely here
     }));
 
     const transaction = {
@@ -94,17 +118,22 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
     setIsLoading(true); // Start loading
 
     try {
-      await onAddTransaction(transaction);
-      setTotalCost("");
-      setDescription("");
-      setSelectedMembers([]);
-      setAmounts({});
-      onClose();
+      if (editingTransaction) {
+      await onEditTransaction(editingTransaction.id, transaction); // Call edit function
+    } else {
+      await onAddTransaction(transaction); // Call add function
+    }
+
     } catch (error) {
       console.error("Error creating transaction:", error);
       setIsLoading(false); // Stop loading on error
       handleRetrySubmit(); // Retry logic
     }
+    setTotalCost("");
+    setDescription("");
+    setSelectedMembers([]);
+    setAmounts({});
+    onClose();
   };
 
   if (!isOpen) return null;
@@ -143,12 +172,8 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
           <button onClick={onClose} className="transaction-modal-cancel-button">
             Cancel
           </button>
-          <button
-            onClick={handleSubmit}
-            className="transaction-modal-submit-button"
-            disabled={isLoading}
-          >
-            {isLoading ? "Creating..." : "Create Transaction"} {/* Show loading text */}
+          <button onClick={handleSubmit} className="transaction-modal-submit-button" disabled={isLoading}>
+            {isLoading ? "Saving..." : editingTransaction ? "Update Transaction" : "Create Transaction"}
           </button>
         </div>
 
@@ -158,6 +183,7 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
             <div key={member.id} className="transaction-modal-member-item">
               <input
                 type="checkbox"
+                checked={selectedMembers.includes(member.id)} // This ensures it's visually checked
                 onChange={(e) => handleMemberChange(member.id, e.target.checked)}
               />
               <label className="member-name">{member.name} </label>
@@ -165,31 +191,42 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction }) => {
               <input
                 type="text"
                 disabled={!selectedMembers.includes(member.id)}
-                onChange={(e) =>
+                value={amounts[member.id]?.paid !== undefined ? amounts[member.id].paid : ""}
+                onChange={(e) => {
+                const inputValue = e.target.value;
+
+                // Allow only numbers and a single dot
+                if (/^\d*\.?\d*$/.test(inputValue)) {
                   setAmounts((prev) => ({
                     ...prev,
                     [member.id]: {
                       ...prev[member.id],
-                      paid: parseFloat(e.target.value) || 0,
+                      paid: inputValue, // Store as string for now
                     },
-                  }))
+                  }));
                 }
+                }}
                 placeholder="Paid"
               />
 
               <input
                 type="text"
                 disabled={!selectedMembers.includes(member.id)}
-                value={amounts[member.id]?.consumed || ""} // Display the updated value
-                onChange={(e) =>
+                value={amounts[member.id]?.consumed !== undefined ? amounts[member.id].consumed : ""}
+                onChange={(e) => {
+                const inputValue = e.target.value;
+
+                // Allow only numbers and a single dot
+                if (/^\d*\.?\d*$/.test(inputValue)) {
                   setAmounts((prev) => ({
                     ...prev,
                     [member.id]: {
                       ...prev[member.id],
-                      consumed: parseFloat(e.target.value) || 0,
+                      consumed: inputValue, // Store as string for now
                     },
-                  }))
+                  }));
                 }
+                }}
                 placeholder="Consumed"
               />
             </div>
