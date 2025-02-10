@@ -18,6 +18,7 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction, editingT
       setDescription(editingTransaction?.description ?? "");
       setSelectedMembers([]);
       setAmounts({});
+      setIsLoading(false);
       const fetchMembers = async () => {
         try {
           const token = localStorage.getItem("token");
@@ -98,10 +99,26 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction, editingT
   };
 
   const handleSubmit = async () => {
-    if (!totalCost || !description) {
-      alert("Please fill in all the fields.");
+    if (!description) {
+      alert("Please fill description.");
       return;
     }
+
+      // Check if total paid and total consumed are equal
+    let totalPaid = 0;
+    let totalConsumed = 0;
+
+    // Loop through all members and sum up the paid and consumed amounts
+    for (let memberId of selectedMembers) {
+      totalPaid += parseFloat(amounts[memberId]?.paid) || 0;
+      totalConsumed += parseFloat(amounts[memberId]?.consumed) || 0;
+    }
+
+    if (totalPaid !== totalConsumed) {
+      alert("The total paid and total consumed values do not match.");
+      return;
+    }
+
 
     const membersRaw = selectedMembers.map((memberId) => ({
       member_id: memberId,
