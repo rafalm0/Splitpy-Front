@@ -34,6 +34,12 @@ const MemberList = ({ groupId }) => {
         setMembers((prev) => prev.filter((member) => member.id !== memberId));
       } catch (error) {
         console.error("Error deleting member:", error);
+        // Check if the error response exists and has a message
+        if (error.response && error.response.data && error.response.data.message) {
+          alert(`Error: ${error.response.data.message}`);
+        } else {
+          alert("An unknown error occurred while deleting the member.");
+        }
       }
     }
   };
