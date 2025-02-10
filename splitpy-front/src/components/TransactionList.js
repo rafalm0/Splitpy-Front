@@ -21,8 +21,8 @@ const TransactionList = ({ groupId }) => {
         );
 
 
-
-        setTransactions(response.data);
+        const sortedTransactions = response.data.sort((a, b) => a.id - b.id);
+        setTransactions(sortedTransactions);
       } catch (error) {
         console.error("Error fetching transactions:", error);
       }
