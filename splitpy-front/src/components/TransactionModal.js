@@ -77,25 +77,35 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction, editingT
     }
   };
 
-  const handleEqualConsumptionChange = (isChecked) => {
+  const handleEqualConsumptionChange = () => {
     if (selectedMembers.length === 0 || totalCost === "") {
       alert("Please select members and enter a total cost first.");
       return;
     }
 
     const numericTotalCost = parseFloat(totalCost) || 0; // Convert to a number safely
-    const perMember = numericTotalCost / selectedMembers.length || 0;
+    const perMemberBase = Math.floor((numericTotalCost / selectedMembers.length) * 100);
+    let totalBase = perMemberBase * selectedMembers.length;
+    let discrepancy = (numericTotalCost * 100) - totalBase; // Remaining cents to distribute
 
-    setAmounts((prev) => {
-      const updated = { ...prev };
-      selectedMembers.forEach((memberId) => {
-        updated[memberId] = {
-          ...updated[memberId],
-          consumed: parseFloat(perMember.toFixed(2)), // Round to 2 decimal places
-        };
-      });
-      return updated;
+    // Create a new object with calculated amounts
+    const updatedAmounts = { ...amounts };
+
+    selectedMembers.forEach((memberId) => {
+      let value = perMemberBase;
+      if (discrepancy > 0) {
+        value += 1;
+        discrepancy -= 1;
+      }
+
+      updatedAmounts[memberId] = {
+        ...updatedAmounts[memberId],
+        consumed: parseFloat((value / 100).toFixed(2)), // Ensure perfect sum
+      };
     });
+
+    // Now, update the state with the computed values
+    setAmounts(updatedAmounts);
   };
 
   const handleSubmit = async () => {
