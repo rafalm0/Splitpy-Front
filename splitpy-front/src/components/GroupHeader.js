@@ -11,14 +11,18 @@ const GroupHeader = ({ group }) => {
 
   const handleDelete = async () => {
     const token = localStorage.getItem("token");
-    try {
-      await axios.delete(`https://splitpy.onrender.com/group/${group.id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setIsDeleted(true); // Mark the group as deleted
-    } catch (error) {
-      console.error("Error deleting group:", error);
+    const isConfirmed = window.confirm("Are you sure you want to delete this Group?");
+    if (isConfirmed){
+      try {
+        await axios.delete(`https://splitpy.onrender.com/group/${group.id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setIsDeleted(true); // Mark the group as deleted
+      } catch (error) {
+        console.error("Error deleting group:", error);
+      }
     }
+
   };
 
   const handleRename = async (newName) => {
@@ -42,9 +46,9 @@ const GroupHeader = ({ group }) => {
   if (isDeleted) return null;
 
   return (
-    <div className="group-header flex items-center justify-between p-2 border-b">
-      <h3 className="text-2xl font-semibold">{group.name}</h3>
-
+    <div className="group-header">
+      <h3 className="group-header-name">{group.name}</h3>
+      <h3 className="group-header-filler"></h3>
       <div className="group-header">
         <button className="balance-button"
           onClick={() => setIsBalanceModalOpen(true)}
@@ -60,13 +64,13 @@ const GroupHeader = ({ group }) => {
           onClick={() => setIsRenameModalOpen(true)}
           className="rename-button"
         >
-          Rename
+          Rename Group
         </button>
         <button
           onClick={handleDelete}
-          className="delete-button"
+          className="delete-group-button"
         >
-          Delete
+          Delete Group
         </button>
       </div>
 

@@ -41,6 +41,7 @@
 
 .main-content {
   position: relative; /* Make the container for member list */
+  max-width: 85%;
   flex-grow: 1; /* Take up remaining space */
   margin-left: 3px;
   background-color: #f9f9f9;
@@ -99,12 +100,27 @@
 
 .sidebar {
   width: 15%;
+  max-width:20%;
   background-color: #fff;
   padding: 15px;
   margin-right: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+.member-list{
+  min-width:10%;
+  max-width:25%
+  }
+
+.group-header{
+  max-width:95%;
+  min-width:25%
+}
+
+.transaction-list{
+  max-width:75%;
+  min-width:40%
+  }
 
 .sidebar h2 {
   font-size: 24px;

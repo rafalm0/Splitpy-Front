@@ -5,10 +5,18 @@
   padding: 1rem; /* Adjust padding if needed */
   gap: 5%;
   border-bottom: 1px solid #ddd;
+  width:95%
 }
 
-.group-header h3 {
+.group-header-name {
   font-size: 1.5em; /* This increases the size of the group name */
+  max-width: 25%;
+  width:250px
+}
+
+.group-header-filler{
+  min-width:25%;
+  max-width:60%
 }
 
 .group-actions {
@@ -18,9 +26,10 @@
 
 .rename-button,
 .balance-button,
-.delete-button {
+.delete-group-button {
   padding: 10px 20px;
   width: 100px;
+  max-width: 20%;
   font-size: 1em;
   cursor: pointer;
   border: none;
@@ -38,12 +47,13 @@
   color: white;
 }
 
-.delete-button {
+.delete-group-button {
   background-color: #f44336; /* Red */
   color: white;
 }
 
 .rename-button:hover,
+.balance-button:hover,
 .delete-button:hover {
   opacity: 0.8; /* Slight opacity change on hover */
 }

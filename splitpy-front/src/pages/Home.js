@@ -115,10 +115,10 @@ function Home() {
             {
               selectedGroup ? (
                 <>
-                  <GroupHeader group={selectedGroup} onRename={handleRename} onDelete={handleDelete} />
+                  <GroupHeader group={selectedGroup} onRename={handleRename} onDelete={handleDelete} className="group-header"/>
                   <div className="lists">
-                  <MemberList groupId={selectedGroup.id} />
-                  <TransactionList groupId={selectedGroup.id} /> {/* Add TransactionList here */}
+                  <MemberList groupId={selectedGroup.id} className="member-list"/>
+                  <TransactionList groupId={selectedGroup.id} className="transaction-list" /> {/* Add TransactionList here */}
                   </div>
                 </>
               ) : (
