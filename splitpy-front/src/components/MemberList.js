@@ -69,9 +69,9 @@ const MemberList = ({ groupId }) => {
       <h3 className="member-header">Members</h3>
         {members.map((member) => (
           <li key={member.id} className="member-item">
-            <span>
+            <div className="member-name-div">
               <h3 className='member-name'>{member.name}  </h3>
-            </span>
+            </div>
             <button
               onClick={() => handleDeleteMember(member.id)}
               className="delete-button"

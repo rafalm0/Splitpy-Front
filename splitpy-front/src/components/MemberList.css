@@ -28,9 +28,9 @@
   height: 40px;
   float: left;
   display: flex;
-  justify-content: center;
-  align-items: left;
+  justify-content: space-between; /* Pushes content to both sides */  align-items: left;
   margin-bottom: 10px;
+  gap:10px;
   padding: 5px;
   border: 1px solid #ccc; /* Border for individual members */
   border-radius: 6px;
@@ -66,10 +66,21 @@
   padding: 1px 1px;
   cursor: pointer;
   height: 45px;
+  max-width:20%;
 }
 
 
 
 .member-name {
-    width: 85px;
+  width: 80%;
+}
+
+.member-name-div {
+  padding-left: 20px;
+  display: flex;            /* Ensures content stays in a row */
+  align-items: center;      /* Keeps text vertically centered */
+  max-width: 150px;         /* Adjust as needed */
+  overflow: hidden;         /* Hides overflowing text */
+  white-space: nowrap;      /* Prevents wrapping */
+  text-overflow: ellipsis;  /* Adds "..." when text is too long */
 }
