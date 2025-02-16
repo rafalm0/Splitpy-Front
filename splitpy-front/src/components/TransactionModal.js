@@ -85,9 +85,8 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction, editingT
 
     const numericTotalCost = parseFloat(totalCost) || 0; // Convert to a number safely
     const perMemberBase = Math.floor((numericTotalCost / selectedMembers.length) * 100);
-    let totalBase = perMemberBase * selectedMembers.length;
-    let discrepancy = (numericTotalCost * 100) - totalBase; // Remaining cents to distribute
-
+    let totalBase = Math.round(perMemberBase * selectedMembers.length);
+    let discrepancy = Math.round((numericTotalCost * 100) - totalBase); // Remaining cents to distribute
     // Create a new object with calculated amounts
     const updatedAmounts = { ...amounts };
 
@@ -100,7 +99,7 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction, editingT
 
       updatedAmounts[memberId] = {
         ...updatedAmounts[memberId],
-        consumed: parseFloat((value / 100).toFixed(2)), // Ensure perfect sum
+        consumed: (value / 100).toFixed(2), // Ensure perfect sum
       };
     });
 
@@ -176,7 +175,14 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction, editingT
               <input
                 type="text"
                 value={totalCost}
-                onChange={(e) => setTotalCost(e.target.value)}
+                onChange={(e) => {
+                  const inputValue = e.target.value;
+
+                  // Allow only numbers and a single dot
+                  if (/^\d*\.?\d*$/.test(inputValue)) {
+                    setTotalCost(inputValue);
+                  }
+                }}
                 placeholder="Enter total cost"
               />
             </div>
