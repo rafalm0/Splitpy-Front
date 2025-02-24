@@ -1,15 +1,15 @@
 /* Modal Overlay */
 .modal-overlay {
-  position: fixed; /* Ensures the modal stays fixed on the screen */
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  display: flex; /* Centers the modal */
+  display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  z-index: 1000; /* Ensure the modal stays above other content */
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
 }
 
 /* Modal Content */
@@ -18,99 +18,89 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 300px; /* Set the width you want for the modal */
-  max-width: 85%; /* Ensure the modal is responsive */
+  width: 300px;
+  max-width: 85%;
   max-height: 85%;
   box-sizing: border-box;
-  overflow: "auto";
+  overflow: auto;
 }
 
-.transaction-modal-modal-footer{
+/* Modal Footer */
+.transaction-modal-footer {
   display: flex;
   flex-direction: row;
-  gap: 300px;
+  gap: 20px;
   padding: 8px;
-  spacing: 20%;
+  justify-content: space-between;
 }
 
-.transaction-modal-price-control {
-  display: flex;
-  flex-direction: row;
-}
-
-
+/* Input Group */
 .transaction-modal-input-group {
-  min-width:50%;
-}
-/* Optional: Styling for buttons */
-.transaction-modal-cancel-button, .transaction-modal-submit-button {
-  padding: 8px 16px;
-  margin-top: 10px;
-  margin-right: 10px;
-  border-radius: 5px;
-  height: 75px;
-  cursor: pointer;
+  min-width: 50%;
 }
 
-.transaction-modal-cancel-button {
-  background-color: #f76459;
-}
-
-.transaction-modal-submit-button {
-  background-color: #007BFF;
-  color: white;
-}
-
+/* Member List */
 .transaction-modal-member-list {
-  max-height: 300px; /* Set your desired max height */
-  overflow-y: auto; /* Enables vertical scrolling */
-  margin-top: 10px; /* Optional: Adds spacing above the list */
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 10px;
   padding: 10px;
-  border: 1px solid #ddd; /* Optional: Matches the style of items */
-  border-radius: 5px; /* Optional: Matches the style of items */
-  background-color: #f1f1f1; /* Optional: Slightly different background to highlight the list */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f1f1f1;
 }
 
+/* Member Item */
 .transaction-modal-member-item {
   display: flex;
-  width: 98%;
-  align-items: left;
-  gap: 10px; /* Adds space between inputs and labels */
+  width: 100%;
+  align-items: center;
+  gap: 10px;
   padding: 5px;
   border: 1px solid #ddd;
   border-radius: 5px;
   background-color: #f9f9f9;
 }
 
-.price-control {
-  display: flex;
-  flex-direction: row;
-}
-
-.transaction-modal-member-item input[type="checkbox"] {
-  margin-right: 5px; /* Adds space between the checkbox and label */
-  width:75px;
-}
-
-.transaction-modal-member-item input[type="number"] {
-  min-width: 50px; /* Sets a minimum width for the number inputs */
-  max-width: 150px; /* Sets a minimum width for the number inputs */
-  width: 25%;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  text-align: left; /* Aligns numbers to the right for better readability */
-}
-.member-name {
-  font-size: 20px;
-}
 .transaction-modal-member-item label {
-  margin-right: 10px; /* Adds space between label and the next input */
   font-weight: bold;
   font-size: 14px;
 }
 
+.transaction-modal-member-item input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.transaction-modal-member-item input[type="number"] {
+  min-width: 50px;
+  max-width: 150px;
+  width: 25%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: left;
+}
+
 .transaction-modal-member-item input[type="number"]:disabled {
-  background-color: #e9e9e9; /* Gray background for disabled inputs */
+  background-color: #e9e9e9;
   cursor: not-allowed;
+}
+
+/* Buttons */
+.transaction-modal-cancel-button,
+.transaction-modal-submit-button {
+  padding: 8px 16px;
+  margin-top: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.transaction-modal-cancel-button {
+  background-color: #f76459;
+  color: white;
+}
+
+.transaction-modal-submit-button {
+  background-color: #007bff;
+  color: white;
 }

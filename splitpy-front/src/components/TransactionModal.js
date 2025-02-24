@@ -3,18 +3,14 @@ import axios from "axios";
 import "./TransactionModal.css";
 
 const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction, editingTransaction, onEditTransaction }) => {
-  const [totalCost, setTotalCost] = useState("");
   const [amounts, setAmounts] = useState({});
   const [description, setDescription] = useState("");
   const [members, setMembers] = useState([]);
   const [selectedMembers, setSelectedMembers] = useState([]);
-  const [isLoading, setIsLoading] = useState(false); // Loading state
-  const [retryCount, setRetryCount] = useState(0); // Retry counter
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
-      // Reset state when modal opens
-      setTotalCost("");
       setDescription(editingTransaction?.description ?? "");
       setSelectedMembers([]);
       setAmounts({});
@@ -31,28 +27,16 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction, editingT
           setMembers(response.data);
 
           if (editingTransaction) {
-          console.log(editingTransaction);
-          setSelectedMembers(editingTransaction.members.map(m => m.id));
-          const updatedAmounts = editingTransaction.members.reduce((acc, member) => {
-            acc[member.id] = {
-              consumed: member.consumed ?? 0,
-              paid: member.paid ?? 0 // Ensures it takes the correct value
-
-            };
-            return acc;
-          }, {});
-          setAmounts(updatedAmounts); // Update amounts state
-
-          console.log("Editing Transaction Data:", editingTransaction); // Debugging
-          console.log("Updated Amounts State:", updatedAmounts); // Check if values are correct
-
-        } else {
-            // Reset to default when creating a new transaction
-            setSelectedMembers([]);
-            setAmounts({});
-        }
-
-
+            setSelectedMembers(editingTransaction.members.map(m => m.id));
+            const updatedAmounts = editingTransaction.members.reduce((acc, member) => {
+              acc[member.id] = {
+                consumed: member.consumed ?? "",
+                paid: member.paid ?? ""
+              };
+              return acc;
+            }, {});
+            setAmounts(updatedAmounts);
+          }
         } catch (error) {
           console.error("Error fetching members:", error);
         }
@@ -67,19 +51,11 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction, editingT
     );
   };
 
-  // Function to handle retry logic
-  const handleRetrySubmit = async () => {
-    if (retryCount < 3) { // Limit retries to 3
-      setRetryCount((prev) => prev + 1);
-      await handleSubmit(); // Retry the request
-    } else {
-      alert("Transaction failed after multiple attempts.");
-    }
-  };
+  const totalCost = selectedMembers.reduce((sum, memberId) => sum + (parseFloat(amounts[memberId]?.paid) || 0), 0);
 
   const handleEqualConsumptionChange = () => {
-    if (selectedMembers.length === 0 || totalCost === "") {
-      alert("Please select members and enter a total cost first.");
+    if (selectedMembers.length === 0 || totalCost === 0) {
+      alert("Please select members and enter payment amounts first.");
       return;
     }
 
@@ -103,7 +79,6 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction, editingT
       };
     });
 
-    // Now, update the state with the computed values
     setAmounts(updatedAmounts);
   };
 
@@ -113,52 +88,30 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction, editingT
       return;
     }
 
-      // Check if total paid and total consumed are equal
-    let totalPaid = 0;
-    let totalConsumed = 0;
-
-    // Loop through all members and sum up the paid and consumed amounts
-    for (let memberId of selectedMembers) {
-      totalPaid += parseFloat(amounts[memberId]?.paid) || 0;
-      totalConsumed += parseFloat(amounts[memberId]?.consumed) || 0;
-    }
-
-    if (totalPaid !== totalConsumed) {
-      alert("The total paid and total consumed values do not match.");
-      return;
-    }
-
-
     const membersRaw = selectedMembers.map((memberId) => ({
       member_id: memberId,
       amount_paid: parseFloat(amounts[memberId]?.paid) || 0,
-      amount_consumed: parseFloat(amounts[memberId]?.consumed) || 0, // Convert safely here
+      amount_consumed: parseFloat(amounts[memberId]?.consumed) || 0,
     }));
 
     const transaction = {
       description,
       group_id: groupId,
-      members_raw: membersRaw, // Use the correctly formatted membersRaw
+      members_raw: membersRaw,
     };
 
-    setIsLoading(true); // Start loading
+    setIsLoading(true);
 
     try {
       if (editingTransaction) {
-      await onEditTransaction(editingTransaction.id, transaction); // Call edit function
-    } else {
-      await onAddTransaction(transaction); // Call add function
-    }
-
+        await onEditTransaction(editingTransaction.id, transaction);
+      } else {
+        await onAddTransaction(transaction);
+      }
     } catch (error) {
       console.error("Error creating transaction:", error);
-      setIsLoading(false); // Stop loading on error
-      handleRetrySubmit(); // Retry logic
+      setIsLoading(false);
     }
-    setTotalCost("");
-    setDescription("");
-    setSelectedMembers([]);
-    setAmounts({});
     onClose();
   };
 
@@ -169,29 +122,6 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction, editingT
       <div className="modal-content">
         <h2 className="transaction-modal-title">Create Transaction</h2>
         <div className="transaction-modal-input-group">
-          <div className="transaction-modal-price-control">
-            <div className="transaction-modal-input-group">
-              <label>Total Cost</label>
-              <input
-                type="text"
-                value={totalCost}
-                onChange={(e) => {
-                  const inputValue = e.target.value;
-
-                  // Allow only numbers and a single dot
-                  if (/^\d*\.?\d*$/.test(inputValue)) {
-                    setTotalCost(inputValue);
-                  }
-                }}
-                placeholder="Enter total cost"
-              />
-            </div>
-            <button onClick={handleEqualConsumptionChange} className="transaction-modal-distribute-button">
-              Distribute Consumption
-            </button>
-          </div>
-        </div>
-        <div className="transaction-modal-input-group">
           <label>Description</label>
           <input
             type="text"
@@ -201,64 +131,49 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction, editingT
           />
         </div>
 
-        <div className="transaction-modal-modal-footer">
-          <button onClick={onClose} className="transaction-modal-cancel-button">
-            Cancel
-          </button>
-          <button onClick={handleSubmit} className="transaction-modal-submit-button" disabled={isLoading}>
-            {isLoading ? "Saving..." : editingTransaction ? "Update Transaction" : "Create Transaction"}
-          </button>
-        </div>
-
         <h3>Involved Members</h3>
         <div className="transaction-modal-member-list">
           {members.map((member) => (
             <div key={member.id} className="transaction-modal-member-item">
               <input
                 type="checkbox"
-                checked={selectedMembers.includes(member.id)} // This ensures it's visually checked
+                checked={selectedMembers.includes(member.id)}
                 onChange={(e) => handleMemberChange(member.id, e.target.checked)}
               />
               <label className="member-name">{member.name} </label>
-
               <input
                 type="text"
                 disabled={!selectedMembers.includes(member.id)}
-                value={amounts[member.id]?.paid !== undefined ? amounts[member.id].paid : ""}
+                value={amounts[member.id]?.paid ?? ""}
                 onChange={(e) => {
-                const inputValue = e.target.value;
-
-                // Allow only numbers and a single dot
-                if (/^\d*\.?\d*$/.test(inputValue)) {
-                  setAmounts((prev) => ({
-                    ...prev,
-                    [member.id]: {
-                      ...prev[member.id],
-                      paid: inputValue, // Store as string for now
-                    },
-                  }));
-                }
+                  const inputValue = e.target.value;
+                  if (/^\d*\.?\d*$/.test(inputValue)) {
+                    setAmounts((prev) => ({
+                      ...prev,
+                      [member.id]: {
+                        ...prev[member.id],
+                        paid: inputValue,
+                      },
+                    }));
+                  }
                 }}
                 placeholder="Paid"
               />
-
               <input
                 type="text"
                 disabled={!selectedMembers.includes(member.id)}
-                value={amounts[member.id]?.consumed !== undefined ? amounts[member.id].consumed : ""}
+                value={amounts[member.id]?.consumed ?? ""}
                 onChange={(e) => {
-                const inputValue = e.target.value;
-
-                // Allow only numbers and a single dot
-                if (/^\d*\.?\d*$/.test(inputValue)) {
-                  setAmounts((prev) => ({
-                    ...prev,
-                    [member.id]: {
-                      ...prev[member.id],
-                      consumed: inputValue, // Store as string for now
-                    },
-                  }));
-                }
+                  const inputValue = e.target.value;
+                  if (/^\d*\.?\d*$/.test(inputValue)) {
+                    setAmounts((prev) => ({
+                      ...prev,
+                      [member.id]: {
+                        ...prev[member.id],
+                        consumed: inputValue,
+                      },
+                    }));
+                  }
                 }}
                 placeholder="Consumed"
               />
@@ -266,7 +181,18 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction, editingT
           ))}
         </div>
 
-
+        <div className="transaction-modal-footer">
+          <h3>Total: ${totalCost.toFixed(2)}</h3>
+          <button onClick={handleEqualConsumptionChange} className="transaction-modal-distribute-button">
+            Distribute Consumption
+          </button>
+          <button onClick={onClose} className="transaction-modal-cancel-button">
+            Cancel
+          </button>
+          <button onClick={handleSubmit} className="transaction-modal-submit-button" disabled={isLoading}>
+            {isLoading ? "Saving..." : editingTransaction ? "Update Transaction" : "Create Transaction"}
+          </button>
+        </div>
       </div>
     </div>
   );
