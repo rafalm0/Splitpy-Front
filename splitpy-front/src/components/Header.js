@@ -30,30 +30,26 @@ function Header() {
         <ul className="nav-links">
           {isAuthenticated ? (
             <>
-              <li>
-                <button className="nav-link logout-button" onClick={handleLogout}>
+              <li className="nav-item">
+                <button className="button" onClick={handleLogout}>
                   Logout
                 </button>
               </li>
-              <li>
-                <button
-                  className="nav-link about-button"
-                  onClick={() => window.location.href = "/about"}>
+              <li className="nav-item">
+                <button className="button" onClick={() => window.location.href = "/about"}>
                   About
                 </button>
               </li>
             </>
           ) : (
             <>
-              <li>
-                <Link to="/login" className="nav-link">
+              <li className="nav-item">
+                <button className="button button-link" onClick={() => window.location.href = "/login"}>
                   Login
-                </Link>
+                </button>
               </li>
-              <li>
-                <button
-                  className="nav-link about-button"
-                  onClick={() => window.location.href = "/about"}>
+              <li className="nav-item">
+                <button className="button" onClick={() => window.location.href = "/about"}>
                   About
                 </button>
               </li>
@@ -65,15 +61,4 @@ function Header() {
   );
 }
 
-
-
 export default Header;
-
-
-
-//
-//<script type="text/javascript">
-//    document.getElementById("about-button").onclick = function () {
-//        window.location.href = "http://localhost:3000/about"
-//        };
-//</script>
