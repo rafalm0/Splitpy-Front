@@ -49,7 +49,7 @@ const GroupHeader = ({ group }) => {
     <div className="group-header">
       <h3 className="group-header-name">{group.name}</h3>
       <h3 className="group-header-filler"></h3>
-      <div className="group-header">
+      <div className="group-header-buttons">
         <button className="balance-button"
           onClick={() => setIsBalanceModalOpen(true)}
         >
