@@ -67,25 +67,24 @@ const MemberList = ({ groupId }) => {
   return (
     <div className="member-list">
       <h3 className="member-header">Members</h3>
-        {members.map((member) => (
-          <li key={member.id} className="member-item">
-            <div className="member-name-div">
-              <h3 className='member-name'>{member.name}  </h3>
-            </div>
-            <button
-              onClick={() => handleDeleteMember(member.id)}
-              className="delete-button"
-            >
-              <img src={DeleteBin} alt="delete icon" />
-            </button>
-          </li>
-        ))}
       <button
         onClick={() => setIsModalOpen(true)}
         className="add-member-button"
       >
         Add Member
       </button>
+        {members.map((member) => (
+          <div key={member.id} className="member-item">
+            <h3 className='member-name'>{member.name.split(" ")[0]}  </h3>
+            <button
+              onClick={() => handleDeleteMember(member.id)}
+              className="delete-button"
+            >
+              <img src={DeleteBin} alt="delete icon" />
+            </button>
+          </div>
+        ))}
+
       <AddMemberModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

@@ -121,43 +121,43 @@ const onEditTransaction = async (transactionId, updatedTransaction) => {
         onClick={() => setIsModalOpen(true)}
         className="add-transaction-button"
       >
-        Create New Transaction
+        New Transaction
       </button>
-      <ul>
-          {transactions.map((transaction) => (
-            <li key={transaction.id} className="transaction-item">
-                <div className="transaction-item">
-                  <div className="mini-transaction-header">
-                  <p><strong>Description:</strong> {transaction.description}</p>
-                  <p><strong>Total Cost:</strong> ${transaction.price}</p>
-                  <p><strong>Date:</strong> {transaction.created_at}</p>
-                  </div>
-                  <ul className="member-mini-list">
-                  {transaction.members.map((member, index) => (
+      <div>
+        {transactions.map((transaction) => (
+          <div key={transaction.id} className="inner-transaction-list">
+            <div className="transaction-item">
+              <div className="mini-transaction-header">
+                <p><strong>{transaction.description}</strong></p>
+                <p><strong>Total:</strong> ${transaction.price}</p>
+                <p><strong>Date:</strong> {transaction.created_at}</p>
+              </div>
+              <ul className="member-mini-list">
+                {transaction.members.map((member, index) => (
 
-                     <li key={index}>
-                      <span><strong> {member.name} </strong></span> | <strong>Paid: </strong>
-                      <span>${member.paid.toFixed(2)}</span> | <strong>Consumed: </strong>
-                      <span>${member.consumed.toFixed(2)}</span>
-                     </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="transaction-buttons">
-                  <button className="delete-transaction-button"
+                 <li key={index}>
+                  <span><strong> {member.name} </strong></span> | <strong>Paid: </strong>
+                  <span>${member.paid.toFixed(2)}</span> | <strong>Consumed: </strong>
+                  <span>${member.consumed.toFixed(2)}</span>
+                 </li>
+                ))}
+              </ul>
+
+              <div className="transaction-buttons">
+                <button className="delete-transaction-button"
                   onClick={() => handleDelTransaction(transaction.id)}>
-                  Delete Transaction
+                  Delete
                   </button>
 
                   <button className="edit-transaction-button"
                   onClick={() => handleEditTransaction(transaction.id)}>
-                  Edit Transaction
-                  </button>
-                </div>
-                </li>
-
-          ))}
-        </ul>
+                  Edit
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
 
       <TransactionModal
         isOpen={isModalOpen}

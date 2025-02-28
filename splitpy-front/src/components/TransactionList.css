@@ -2,7 +2,7 @@
   float: right;
   margin-left: auto; /* This pushes the list to the right */
   margin-top: 20px;
-  padding: 20px;
+  padding: 10px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow for card effect */
   background-color: #fff; /* White background for card-like appearance */
@@ -17,7 +17,7 @@
 
 
 .transaction-header {
-  font-size: 1.5em;
+  font-size:  1.3em;
   margin-bottom: 10px;
   color: #333; /* Slightly darker color for the header */
 }
