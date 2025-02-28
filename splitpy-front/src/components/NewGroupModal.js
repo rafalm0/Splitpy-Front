@@ -1,32 +1,35 @@
-// TailwindModal.js
 import React from "react";
-import "./NewGroupModal.css"; // Optional: Include Tailwind and custom styles if needed
+import "./NewGroupModal.css"; // Include your custom CSS
 
 const NewGroupModal = ({
   isOpen,
   onClose,
-  onSecondaryAction,
   title,
   children,
 }) => {
-  if (!isOpen) return null;
+  if (!isOpen) return null; // Do not render if modal is not open
 
-  const handleClose = () => {onClose(); };
+  const handleClose = () => {
+    onClose(); // Close the modal when the button is clicked
+  };
 
   return (
-    <dialog open className="relative p-6 bg-white rounded-lg shadow-lg showing">
-
-      <h2 className="mb-4 text-lg font-semibold">{title}</h2>
-      <div className="mb-4 text-gray-700">{children}</div>
-      <div className="flex justify-end space-x-2">
-
-        <button
-          onClick={handleClose}
-          className="px-4 py-2 text-white bg-indigo-500 rounded">
-          Close
-        </button>
+    <div className="new-group-modal-overlay">
+      <div className="new-group-modal-content">
+        <h2 className="new-group-modal-title">{title}</h2>
+        <div className="new-group-modal-body">
+          {children} {/* Display the children components (inputs, etc.) */}
+        </div>
+        <div className="new-group-modal-footer">
+          <button
+            onClick={handleClose}
+            className="new-group-modal-close-button"
+          >
+            Close
+          </button>
+        </div>
       </div>
-    </dialog>
+    </div>
   );
 };
 

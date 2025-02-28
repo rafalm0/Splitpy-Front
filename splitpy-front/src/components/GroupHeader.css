@@ -5,20 +5,18 @@
   padding: 1rem; /* Adjust padding if needed */
   gap: 5%;
   border-bottom: 1px solid #ddd;
-  width:95%
+  width:95%;
+  max-width:500px;
 }
 
 .group-header-name {
   font-size: 1.5em; /* This increases the size of the group name */
-  max-width: 25%;
-  width:250px
-}
-.group-header-buttons{
-  gap: 5px;
+  width: 25%;
+  max-width:250px
 }
 
 .group-header-filler{
-  min-width:25%;
+  min-width:0%;
   max-width:60%
 }
 
@@ -27,16 +25,21 @@
   gap: 1rem;
 }
 
+.group-header-buttons {
+    display: flex;
+    gap: 5px;
+    width: 85%;
+    justify-content: flex-end; /* if you want them aligned right */
+}
+
 .rename-button,
 .balance-button,
 .delete-group-button {
-  padding: 10px 20px;
-  width: 350px;
-  max-width: 25%;
-  font-size: 1em;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
+    flex: 1;  /* Each button takes equal width */
+    min-width: 80px;  /* Set a reasonable minimum */
+    max-width: 150px; /* Optional, if you want them capped */
+    padding: 10px;
+    font-size: 1em;
 }
 
 .balance-button {

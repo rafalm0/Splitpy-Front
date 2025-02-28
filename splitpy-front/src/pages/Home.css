@@ -26,6 +26,9 @@
   border-right: 1px solid #ddd;
 }
 
+.GroupSidebar{
+  z-index: 1000;
+  }
 .groups-list {
   list-style-type: none;
   padding: 0;

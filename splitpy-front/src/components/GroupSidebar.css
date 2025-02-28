@@ -1,0 +1,60 @@
+.GroupSidebar {
+  padding: 0rem;
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.GroupSidebar.closed {
+  transform: translateX(-100%);
+}
+
+.GroupSidebar.open {
+  transform: translateX(0);
+}
+
+.GroupSidebar-toggle {
+
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: -20px;
+  right: 0px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Special position when sidebar is closed */
+.GroupSidebar.closed .GroupSidebar-toggle {
+  right: -35px; /* sticks out further to the left */
+}
+
+.GroupSidebar-toggle img {
+  width: 30px;
+  height: 30px;
+}
+
+.GroupSidebar-spacer{
+  height: 30px;
+}
+
+.group-item {
+  padding: 10px;
+  margin: 8px 0;
+  background-color: #e3f2fd;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: 1px solid #ddd;
+}
+
+/* Media Query to disable slide-out on larger screens */
+@media (min-width: 769px) {
+  .GroupSidebar {
+    transform: none;
+    position: static;
+  }
+  .GroupSidebar-toggle {
+    display: none; /* No toggle on desktop */
+  }
+}

@@ -5,6 +5,7 @@ import NewGroupModal from "../components/NewGroupModal"; // Import the new modal
 import GroupHeader from "../components/GroupHeader"; // Import GroupHeader
 import MemberList from "../components/MemberList"; // Import GroupHeader
 import TransactionList from "../components/TransactionList";
+import GroupSidebar from "../components/GroupSidebar";
 import "./Home.css";
 
 function Home() {
@@ -25,21 +26,7 @@ function Home() {
     }
   }, []);
 
-  const fetchUserGroups = async (token) => {
-    try {
-      const response = await axios.get("https://splitpy.onrender.com/group", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      });
-      setGroups(response.data);
-    } catch (error) {
-      setErrorMessage("Failed to load groups");
-      console.error("Error fetching groups:", error);
-    }
-  };
+
 
   const handleCreateGroup = async () => {
     const token = localStorage.getItem("token");
@@ -64,6 +51,23 @@ function Home() {
     }
   };
 
+
+  const fetchUserGroups = async (token) => {
+    try {
+      const response = await axios.get("https://splitpy.onrender.com/group", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      setGroups(response.data);
+    } catch (error) {
+      setErrorMessage("Failed to load groups");
+      console.error("Error fetching groups:", error);
+    }
+  };
+
   // Rename callback to update UI
   const handleRename = (groupId, newName) => {
     setGroups((prevGroups) =>
@@ -83,34 +87,11 @@ function Home() {
     <div className="home-page">
       {isAuthenticated ? (
         <div className="home-content">
-          <div className="sidebar">
-            <h2>Groups</h2>
-            {errorMessage ? (
-              <p>{errorMessage}</p>
-            ) : (
-              <ul className="groups-list">
-                {groups.length > 0 ? (
-                  groups.map((group) => (
-                    <li
-                      key={group.id}
-                      className="group-item"
-                      onClick={() => setSelectedGroup(group)} // Set the selected group
-                    >
-                      {group.name}
-                    </li>
-                  ))
-                ) : (
-                  <p>You are not part of any groups.</p>
-                )}
-              </ul>
-            )}
-            <button
-              onClick={() => setShowModal(true)}
-              className="create-group-button"
-            >
-              Add Group
-            </button>
-          </div>
+
+          <GroupSidebar onSelectGroup={(group) => setSelectedGroup(group)}
+            onAddGroupClick={() => setShowModal(true)}  // Pass function to open modal
+            setNewGroupName={setNewGroupName} // So GroupSidebar can clear the name if needed className="GroupSidebar"
+          />
           <div className="main-content">
             {
               selectedGroup ? (
