@@ -10,10 +10,13 @@
   width: 65%;
   border: 1px solid #ddd; /* Light border for the card */
   max-height: 75vh; /* Adjust based on your layout needs */
-  overflow-y: auto; /* Adds a scrollbar when needed */
 }
 
-
+.inner-transaction-list{
+  overflow-y:auto;
+  height:80%;
+  padding-right:5px;
+}
 
 
 .transaction-header {

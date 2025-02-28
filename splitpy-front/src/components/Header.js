@@ -16,47 +16,22 @@ function Header() {
   const handleLogout = () => {
     localStorage.removeItem('token');  // Remove token from localStorage
     setIsAuthenticated(false);         // Update authentication state
-    window.location.href = '/';         // Redirect to home
+    window.location.href = '/login';         // Redirect to home
   };
 
   return (
     <header className="header">
-      <div className="logo">
-        <Link to="/" className="logo-link">
-          Settle Up
-        </Link>
+      <Link to="/" className="logo-link">
+        Settle Up
+      </Link>
+      <div className="nav-itens">
+        <button className="button" onClick={handleLogout}>
+          {isAuthenticated ? ("Logout" ) : ("Login")}
+        </button>
+        <button className="button" onClick={() => window.location.href = "/about"}>
+          About
+        </button>
       </div>
-      <nav>
-        <ul className="nav-links">
-          {isAuthenticated ? (
-            <>
-              <li className="nav-item">
-                <button className="button" onClick={handleLogout}>
-                  Logout
-                </button>
-              </li>
-              <li className="nav-item">
-                <button className="button" onClick={() => window.location.href = "/about"}>
-                  About
-                </button>
-              </li>
-            </>
-          ) : (
-            <>
-              <li className="nav-item">
-                <button className="button button-link" onClick={() => window.location.href = "/login"}>
-                  Login
-                </button>
-              </li>
-              <li className="nav-item">
-                <button className="button" onClick={() => window.location.href = "/about"}>
-                  About
-                </button>
-              </li>
-            </>
-          )}
-        </ul>
-      </nav>
     </header>
   );
 }

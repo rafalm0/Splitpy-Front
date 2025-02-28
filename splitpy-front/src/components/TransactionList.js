@@ -123,9 +123,9 @@ const onEditTransaction = async (transactionId, updatedTransaction) => {
       >
         New Transaction
       </button>
-      <div>
+      <div className="inner-transaction-list">
         {transactions.map((transaction) => (
-          <div key={transaction.id} className="inner-transaction-list">
+          <div key={transaction.id} >
             <div className="transaction-item">
               <div className="mini-transaction-header">
                 <p><strong>{transaction.description}</strong></p>

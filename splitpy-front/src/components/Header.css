@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 10px;
   background-color: rgb(150, 100, 200);
   color: white;
   font-family: Arial, sans-serif;
@@ -16,29 +16,18 @@
   font-weight: bold;
 }
 
-.nav-links {
+.nav-itens {
+  gap:10px;
   display: flex;
-  align-items: center;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-item {
-  margin-left: 20px;
 }
 
 .button {
   background: #6200ea;
-  border: none;
   font-size: 1.2rem;
   color: white;
   cursor: pointer;
   transition: color 0.3s ease;
-  text-decoration: none;
-  padding: 6px 12px; /* Ensures similar spacing */
-  display: flex;
-  align-items: center; /* Aligns with buttons */
+  padding: 6px
 }
 
 .button:hover {
