@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./GroupSidebar.css"; // You’ll create this file
 import NewGroupModal from "../components/NewGroupModal"; // Import the new modal
-import ExpandSidebar from "../assets/menu-unfold-line.svg"
+import ExpandSidebar from "../assets/arrow-right-wide-line.svg"
 import RetractSidebar from "../assets/contract-left-line.svg"
 
 const GroupSidebar = ({ onSelectGroup, onAddGroupClick, setNewGroupName  }) => {

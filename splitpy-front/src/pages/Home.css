@@ -9,7 +9,7 @@
 .home-content {
   display: flex;
   height: 95vh; /* Ensure it takes full viewport height */
-  width: 95%;
+  width: 100%;
   max-width: 1600px;
   margin: 0 auto;
   padding: 10px;
@@ -56,7 +56,7 @@
 
 .main-content {
   position: relative;
-  max-width: 82%;
+  max-width: 100%;
   flex-grow: 1;
   margin-left: 3px;
   background-color: #f9f9f9;

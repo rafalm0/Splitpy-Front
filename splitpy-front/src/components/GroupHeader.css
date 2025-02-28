@@ -1,11 +1,11 @@
 .group-header {
-  display: flex;
+  display: row;
   justify-content: space-between;
   align-items: center;
   padding: 1rem; /* Adjust padding if needed */
   gap: 5%;
   border-bottom: 1px solid #ddd;
-  width:95%;
+  width:80%;
   max-width:500px;
 }
 
@@ -16,8 +16,8 @@
 }
 
 .group-header-filler{
-  min-width:0%;
-  max-width:60%
+  width:0%;
+  max-width:500px;
 }
 
 .group-actions {
@@ -27,8 +27,8 @@
 
 .group-header-buttons {
     display: flex;
-    gap: 5px;
-    width: 85%;
+    gap: 25px;
+    width: 100%;
     justify-content: flex-end; /* if you want them aligned right */
 }
 
@@ -36,8 +36,8 @@
 .balance-button,
 .delete-group-button {
     flex: 1;  /* Each button takes equal width */
-    min-width: 80px;  /* Set a reasonable minimum */
-    max-width: 150px; /* Optional, if you want them capped */
+    width: 20%;
+    max-width: 135px; /* Optional, if you want them capped */
     padding: 10px;
     font-size: 1em;
 }

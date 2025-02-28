@@ -103,7 +103,13 @@ function Home() {
                   </div>
                 </>
               ) : (
-                <p>Select a group from the sidebar to view details.</p>
+              <div>
+              <br>
+
+              </br>
+              <p>Select a group from the sidebar to view details.</p>
+              </div>
+
               )
             }
           </div>
