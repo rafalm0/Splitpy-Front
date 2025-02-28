@@ -136,9 +136,11 @@ const onEditTransaction = async (transactionId, updatedTransaction) => {
                 {transaction.members.map((member, index) => (
 
                  <li key={index}>
-                  <span><strong> {member.name} </strong></span> | <strong>Paid: </strong>
-                  <span>${member.paid.toFixed(2)}</span> | <strong>Consumed: </strong>
-                  <span>${member.consumed.toFixed(2)}</span>
+                  <span>
+                    <strong>{member.name} </strong> <br />
+                    <strong>Paid: </strong> ${member.paid.toFixed(2)} <br />
+                    <strong>Consumed: </strong> ${member.consumed.toFixed(2)}
+                  </span>
                  </li>
                 ))}
               </ul>

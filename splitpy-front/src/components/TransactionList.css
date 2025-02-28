@@ -9,7 +9,7 @@
   margin-right: 15px; /* To shift the whole list a bit to the right */
   width: 65%;
   border: 1px solid #ddd; /* Light border for the card */
-  max-height: 65vh; /* Adjust based on your layout needs */
+  max-height: 60vh; /* Adjust based on your layout needs */
 }
 
 .inner-transaction-list{
@@ -34,6 +34,12 @@
   cursor: pointer;
   margin-bottom: 20px;
   font-size: 16px; /* Slightly larger text for the button */
+}
+
+.transaction-buttons{
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
 }
 
 .member-mini-list {
