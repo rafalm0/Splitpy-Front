@@ -98,8 +98,8 @@ function Home() {
                 <>
                   <GroupHeader group={selectedGroup} onRename={handleRename} onDelete={handleDelete} className="group-header"/>
                   <div className="lists">
-                  <MemberList groupId={selectedGroup.id} className="member-list"/>
-                  <TransactionList groupId={selectedGroup.id} className="transaction-list" /> {/* Add TransactionList here */}
+                    <MemberList groupId={selectedGroup.id} className="member-list"/>
+                    <TransactionList groupId={selectedGroup.id} className="transaction-list" /> {/* Add TransactionList here */}
                   </div>
                 </>
               ) : (

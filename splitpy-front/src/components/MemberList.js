@@ -73,17 +73,19 @@ const MemberList = ({ groupId }) => {
       >
         Add Member
       </button>
+      <div className="inner-member-list">
         {members.map((member) => (
           <div key={member.id} className="member-item">
             <h3 className='member-name'>{member.name.split(" ")[0]}  </h3>
             <button
               onClick={() => handleDeleteMember(member.id)}
-              className="delete-button"
+              className="delete-member-button"
             >
-              <img src={DeleteBin} alt="delete icon" />
+              <img src={DeleteBin} alt="delete-member-button" />
             </button>
           </div>
         ))}
+      </div>
 
       <AddMemberModal
         isOpen={isModalOpen}

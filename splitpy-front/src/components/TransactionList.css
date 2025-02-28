@@ -9,12 +9,12 @@
   margin-right: 15px; /* To shift the whole list a bit to the right */
   width: 65%;
   border: 1px solid #ddd; /* Light border for the card */
-  max-height: 75vh; /* Adjust based on your layout needs */
+  max-height: 65vh; /* Adjust based on your layout needs */
 }
 
 .inner-transaction-list{
   overflow-y:auto;
-  height:80%;
+  height:79%;
   padding-right:5px;
 }
 

@@ -51,7 +51,6 @@
 .lists {
   display: flex;
   flex-direction: row;
-  max-width: 95%;
 }
 
 .main-content {
@@ -66,18 +65,8 @@
 }
 
 .member-list {
-  min-width: 10%;
-  max-width: 25%;
-}
-
-.group-header {
-  min-width: 25%;
-  max-width: 95%;
-}
-
-.transaction-list {
-  min-width: 40%;
-  max-width: 75%;
+  height:50%;
+  max-width:50%;
 }
 
 .sidebar h2 {
