@@ -18,6 +18,8 @@
   padding-right:5px;
 }
 
+.transaction-member-info{
+}
 
 .transaction-header {
   font-size:  1.3em;
@@ -49,6 +51,24 @@
   max-width: 350px;
   gap: 5px; /* Adds space between member items */
   margin-top: 5px;
+  padding-left: 15px;
+}
+
+.item-header{
+  display: flex;
+  flex-direction: column;
+}
+
+.itemColapse-toggle{
+  height: 30px;
+  background-color: none#;
+}
+
+.itemColapse-toggle img{
+  margin-top:-10px;
+  width: 24px;
+  height: 24px;
+  background-color: #none;
 }
 
 .add-transaction-button:hover {
