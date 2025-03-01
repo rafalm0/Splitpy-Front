@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AddMemberModal from "./AddMemberModal";
 import DeleteBin from "../assets/delete-bin-line.svg"
+import ExpandSidebar from "../assets/arrow-right-wide-line.svg"
+import RetractSidebar from "../assets/contract-left-line.svg"
 import "./MemberList.css";
 
 const MemberList = ({ groupId }) => {
   const [members, setMembers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOpen,setIsOpen] = useState(false);
 
   const fetchMembers = async () => {
     const token = localStorage.getItem("token");
@@ -65,7 +68,15 @@ const MemberList = ({ groupId }) => {
   }, [groupId]);
 
   return (
-    <div className="member-list">
+  <div className="member-list-collapsable">
+    <button className="memberSidebar-toggle" onClick={() => setIsOpen(!isOpen)}>
+        <img
+          src={isOpen ? RetractSidebar : ExpandSidebar}
+          alt={isOpen ? "retract sidebar" : "expand sidebar"}
+        />
+    </button>
+
+    <div className="member-list" style={{ display: isOpen ? "block" : "none" }}>
       <h3 className="member-header">Members</h3>
       <button
         onClick={() => setIsModalOpen(true)}
@@ -93,6 +104,7 @@ const MemberList = ({ groupId }) => {
         onAddMember={addMember}
       />
     </div>
+  </div>
   );
 };
 

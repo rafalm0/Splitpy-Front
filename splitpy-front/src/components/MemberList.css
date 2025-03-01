@@ -1,8 +1,19 @@
 .member-list {
+
   float: left;
   margin-right: auto; /* This pushes the list to the right */
-  margin-top: 20px;
+  margin-top: 0px;
+
   padding: 10px;
+  border-radius: 8px;
+  background-color: #fff; /* White background for card-like appearance */
+  margin-right: 5px; /* To shift the whole list a bit to the right */
+}
+
+.member-list-collapsable{
+  display:flex;
+  flex-direction: column;
+  margin-top: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow for card effect */
   background-color: #fff; /* White background for card-like appearance */
@@ -10,8 +21,26 @@
   border: 1px solid #ddd; /* Light border for the card */
 }
 
+.memberSidebar-toggle{
+  width: 30px;
+  height: 30px;
+  margin:5px;
+  padding:0px;
+  background: #none;
+  border: none;
+  cursor: pointer;
+}
+
+.memberSidebar-toggle img {
+  width: 30px;
+  height: 30px;
+  top: -20px;
+  right: -20px;
+}
+
+
 .inner-member-list{
-  height: 85%;
+  height: 99%;
   overflow-y:scroll;
   overflow-x:hidden;
   padding-right:7px;
@@ -26,6 +55,7 @@
 
 
 .member-header {
+  margin:0px;
   font-size:  1.3em;
   font-weight: bold;
   margin-bottom: 12px;
