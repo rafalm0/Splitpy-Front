@@ -122,16 +122,13 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction, editingT
       <div className="modal-content">
         <h2 className="transaction-modal-title">Create Transaction</h2>
         <div className="transaction-modal-input-group">
-          <label>Description</label>
           <input
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="Enter description"
+            placeholder="Enter transaction name / description"
           />
         </div>
-
-        <h3>Involved Members</h3>
         <div className="transaction-modal-member-list">
           {members.map((member) => (
             <div key={member.id} className="transaction-modal-member-item">

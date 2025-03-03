@@ -14,24 +14,20 @@
 
 /* Modal Content */
 .modal-content {
+  display: flex;
+  flex-direction: column; /* Stack header, content, footer vertically */
+  height: 95vh; /* Full height of the viewport minus some margin */
+  max-width: 95vw;
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 85%;
-  max-width: 300px;
-  max-height: 85%;
-  box-sizing: border-box;
-  overflow: auto;
 }
 
-/* Modal Footer */
-.transaction-modal-footer {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-  padding: 8px;
-  justify-content: space-between;
+
+.transaction-modal-title {
+  margin-top:5px;
+  margin-bottom:5px;
 }
 
 /* Input Group */
@@ -41,9 +37,9 @@
 
 /* Member List */
 .transaction-modal-member-list {
-  max-height: 300px;
+  flex-grow: 1; /* This will expand to fill available space */
   overflow-y: auto;
-  margin-top: 10px;
+  margin: 10px 0; /* Give some space above and below */
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -53,7 +49,7 @@
 /* Member Item */
 .transaction-modal-member-item {
   display: flex;
-  width: 100%;
+  width: 95%;
   align-items: center;
   gap: 10px;
   padding: 5px;
@@ -68,13 +64,16 @@
 }
 
 .transaction-modal-member-item input[type="checkbox"] {
-  margin-right: 5px;
+  margin: 5px;
+  width: 20px;
+
 }
 
 .transaction-modal-member-item input[type="number"] {
+  width: 25%;
   min-width: 50px;
   max-width: 150px;
-  width: 25%;
+
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -88,8 +87,9 @@
 
 /* Buttons */
 .transaction-modal-cancel-button,
-.transaction-modal-submit-button {
-  padding: 8px 16px;
+.transaction-modal-submit-button,
+.transaction-modal-distribute-button {
+  padding: 6px 6px;
   margin-top: 10px;
   border-radius: 5px;
   cursor: pointer;
@@ -98,6 +98,16 @@
 .transaction-modal-cancel-button {
   background-color: #f76459;
   color: white;
+}
+
+.transaction-modal-footer {
+  flex-shrink: 0; /* Footer doesn't shrink */
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 8px;
+  justify-content: space-between;
+  border-top: 1px solid #ddd;
 }
 
 .transaction-modal-submit-button {
