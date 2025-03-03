@@ -87,7 +87,7 @@ const MemberList = ({ groupId }) => {
       <div className="inner-member-list">
         {members.map((member) => (
           <div key={member.id} className="member-item">
-            <h3 className='member-name'>{member.name.split(" ")[0]}  </h3>
+            <h3 className='member-name'>{member.name.trim().split(" ")[0]}  </h3>
             <button
               onClick={() => handleDeleteMember(member.id)}
               className="delete-member-button"

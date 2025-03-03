@@ -1,6 +1,6 @@
 .transaction-list {
   float: right;
-  margin-left: auto; /* This pushes the list to the right */
+  margin-left: 10px; /* This pushes the list to the right */
   margin-top: 20px;
   padding: 10px;
   border-radius: 8px;
@@ -14,7 +14,7 @@
 
 .inner-transaction-list{
   overflow-y:auto;
-  height:79%;
+  height:76%;
   padding-right:5px;
 }
 

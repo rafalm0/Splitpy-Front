@@ -10,15 +10,17 @@
   margin-right: 5px; /* To shift the whole list a bit to the right */
 }
 
-.member-list-collapsable{
-  display:flex;
-  flex-direction: column;
-  margin-top: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow for card effect */
-  background-color: #fff; /* White background for card-like appearance */
-  margin-right: 5px; /* To shift the whole list a bit to the right */
-  border: 1px solid #ddd; /* Light border for the card */
+.member-list-collapsable {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    max-height: 95vh; /* Maximum height is the screen (with a bit of breathing room if needed) */
+    max-width: 50%; /* Optional if you want it full width */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    margin-right: 5px;
+    border: 1px solid #ddd;
 }
 
 .memberSidebar-toggle{
@@ -39,12 +41,13 @@
 }
 
 
-.inner-member-list{
-  height: 99%;
-  overflow-y:scroll;
-  overflow-x:hidden;
-  padding-right:7px;
-  padding-top:10px;
+.inner-member-list {
+    flex-grow: 1; /* This takes up all remaining space */
+    overflow-y: auto; /* This scrolls if needed */
+    overflow-x: hidden;
+    padding-right: 7px;
+    padding-top: 10px;
+    background-color: #f9f9f9; /* Just to make it visually clear */
 }
 
 .member-name {
@@ -55,11 +58,12 @@
 
 
 .member-header {
-  margin:0px;
-  font-size:  1.3em;
-  font-weight: bold;
-  margin-bottom: 12px;
-  text-align: Left; /* Center-align the header text */
+    margin:0px;
+    padding: 10px;
+    font-size: 1.3em;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    flex-shrink: 0; /* Header height stays fixed */
 }
 
 .member-item {
