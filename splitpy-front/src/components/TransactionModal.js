@@ -87,6 +87,25 @@ const TransactionModal = ({ isOpen, onClose, groupId, onAddTransaction, editingT
       alert("Please fill description.");
       return;
     }
+    if (selectedMembers.length === 0 || totalCost === 0) {
+      alert("Please select members and enter payment amounts first.");
+      return;
+    }
+
+
+    const member_consumption = selectedMembers.map((memberId) => ({
+        member_id: memberId,
+        amount_paid: parseFloat(amounts[memberId]?.paid) || 0,
+        amount_consumed: parseFloat(amounts[memberId]?.consumed) || 0,
+    }));
+    // Validation step - Check if paid and consumed match
+    const totalPaid = member_consumption.reduce((sum, m) => sum + m.amount_paid, 0);
+    const totalConsumed = member_consumption.reduce((sum, m) => sum + m.amount_consumed, 0);
+
+    if (Math.abs(totalPaid - totalConsumed) > 0.01) { // Allow small floating point tolerance
+        alert(`Amount paid ($${totalPaid.toFixed(2)}) does not match amount consumed ($${totalConsumed.toFixed(2)}). Please review.`);
+        return;
+    }
 
     const membersRaw = selectedMembers.map((memberId) => ({
       member_id: memberId,
